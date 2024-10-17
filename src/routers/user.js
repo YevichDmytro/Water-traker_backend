@@ -1,7 +1,7 @@
 import express from 'express';
 
 import {
-  getUsersController,
+  getAllUsersController,
   getUserController,
   createUserController,
   updateUserController,
@@ -11,7 +11,7 @@ import ctrlWrapper from '../utils/ctrlWrapper.js';
 
 const router = express.Router();
 
-router.get('/', ctrlWrapper(getUsersController));
+router.get('/', ctrlWrapper(getAllUsersController));
 
 router.get('/:id', isValidId, ctrlWrapper(getUserController));
 

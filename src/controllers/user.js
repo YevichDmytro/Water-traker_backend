@@ -1,14 +1,14 @@
 import createHttpError from 'http-errors';
 
 import {
-  getServiceUsers,
+  getAllServiceUsers,
   getServiceUser,
   createServiceUser,
   updateServiceUser,
 } from '../services/user.js';
 
-export const getUsersController = async (req, res) => {
-  const students = await getServiceUsers();
+export const getAllUsersController = async (req, res) => {
+  const students = await getAllServiceUsers();
 
   res.send({ status: 200, data: students });
 };

@@ -1,6 +1,6 @@
 import User from '../db/models/Users.js';
 
-export const getServiceUsers = () => {
+export const getAllServiceUsers = () => {
   return User.find();
 };
 
