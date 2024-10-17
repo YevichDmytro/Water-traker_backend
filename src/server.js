@@ -1,7 +1,8 @@
+import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
 import pino from 'pino-http';
-import cookieParser from 'cookie-parser';
+
 import router from './routers/index.js';
 import { env } from './utils/env.js';
 
