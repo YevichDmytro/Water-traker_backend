@@ -2,6 +2,7 @@ import cors from 'cors';
 import express from 'express';
 import pino from 'pino-http';
 
+import userRoutes from './routers/user.js';
 import { env } from './utils/env.js';
 
 const setupServer = () => {
@@ -39,6 +40,8 @@ const setupServer = () => {
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
   });
+
+  app.use('/user', userRoutes);
 };
 
 export default setupServer;
