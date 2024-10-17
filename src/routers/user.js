@@ -1,15 +1,17 @@
-import express from 'express';
-
+import { Router } from 'express';
 import {
   getAllUsersController,
   getUserController,
   createUserController,
   updateUserController,
 } from '../controllers/user.js';
+import { authenticate } from '../middlewares/authenticate.js';
 import isValidId from '../middlewares/isValidId.js';
 import ctrlWrapper from '../utils/ctrlWrapper.js';
 
-const router = express.Router();
+const router = Router();
+
+router.use(authenticate);
 
 router.get('/', ctrlWrapper(getAllUsersController));
 

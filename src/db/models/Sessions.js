@@ -27,5 +27,5 @@ const sessionSchema = new Schema(
   { versionKey: false, timestamps: true },
 );
 
-const SessionsCollection = model('students', sessionSchema);
+const SessionsCollection = model('sessions', sessionSchema);
 export default SessionsCollection;
