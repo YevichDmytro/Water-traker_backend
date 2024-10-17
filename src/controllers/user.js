@@ -1,14 +1,14 @@
 import createHttpError from 'http-errors';
 
 import {
-  getAllServiceUsers,
-  getServiceUser,
-  createServiceUser,
-  updateServiceUser,
+  getAllUsersService,
+  getUserService,
+  createUserService,
+  updateUserService,
 } from '../services/user.js';
 
 export const getAllUsersController = async (req, res) => {
-  const students = await getAllServiceUsers();
+  const students = await getAllUsersService();
 
   res.send({ status: 200, data: students });
 };
@@ -16,7 +16,7 @@ export const getAllUsersController = async (req, res) => {
 export const getUserController = async (req, res, next) => {
   const { id } = req.params;
 
-  const user = await getServiceUser(id);
+  const user = await getUserService(id);
 
   if (user === null) {
     return next(createHttpError.NotFound('User not found!'));
@@ -33,7 +33,7 @@ export const createUserController = async (req, res) => {
     gender: req.body.gender,
   };
 
-  const createUser = await createServiceUser(user);
+  const createUser = await createUserService(user);
 
   res
     .status(201)
@@ -50,7 +50,7 @@ export const updateUserController = async (req, res, next) => {
     gender: req.body.gender,
   };
 
-  const update = await updateServiceUser(id, user);
+  const update = await updateUserService(id, user);
   if (update.lastErrorObject.updatedExisting === true) {
     return res.status(200).send({
       status: 200,
