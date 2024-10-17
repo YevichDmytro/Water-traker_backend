@@ -1,18 +1,18 @@
 import User from '../db/models/Users.js';
 
-export const getAllServiceUsers = () => {
+export const getAllUsersService = () => {
   return User.find();
 };
 
-export const getServiceUser = (id) => {
+export const getUserService = (id) => {
   return User.findById({ _id: id });
 };
 
-export const createServiceUser = (payload) => {
+export const createUserService = (payload) => {
   return User.create(payload);
 };
 
-export const updateServiceUser = (id, changed) => {
+export const updateUserService = (id, changed) => {
   return User.findByIdAndUpdate({ _id: id }, changed, {
     new: true,
     runValidators: true,
