@@ -5,6 +5,8 @@ import pino from 'pino-http';
 
 import router from './routers/index.js';
 import { env } from './utils/env.js';
+import errorHandler from './utils/errorHandler.js';
+import notFoundHandler from './utils/notFoundHandler.js';
 
 const setupServer = () => {
   const app = express();
@@ -21,6 +23,9 @@ const setupServer = () => {
   app.use(logger);
 
   app.use('/', router);
+
+  app.use(notFoundHandler);
+  app.use(errorHandler);
 
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
