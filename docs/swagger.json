@@ -31,7 +31,7 @@
     "/register": {
       "post": {
         "tags": [
-          "User"
+          "Auth"
         ],
         "summary": "Register a new user",
         "operationId": "registerUser",
@@ -127,7 +127,7 @@
     "/login": {
       "post": {
         "tags": [
-          "User"
+          "Auth"
         ],
         "summary": "Login a user",
         "operationId": "loginUser",
@@ -244,7 +244,7 @@
     "/logout": {
       "post": {
         "tags": [
-          "User"
+          "Auth"
         ],
         "summary": "Logout a user",
         "operationId": "logoutUser",
@@ -256,26 +256,6 @@
         "responses": {
           "204": {
             "description": "User has been logged out; no content returned"
-          },
-          "401": {
-            "description": "Unauthorized: missing or invalid token",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 401
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Unauthorized: invalid token"
-                    }
-                  }
-                }
-              }
-            }
           }
         }
       }
@@ -283,7 +263,7 @@
     "/refresh": {
       "post": {
         "tags": [
-          "User"
+          "Auth"
         ],
         "summary": "Refresh user session",
         "operationId": "refreshUserSession",
