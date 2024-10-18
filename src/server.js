@@ -3,6 +3,7 @@ import cors from 'cors';
 import express from 'express';
 import pino from 'pino-http';
 
+import swaggerDocs from './middlewares/swaggerDocs.js';
 import router from './routers/index.js';
 import { env } from './utils/env.js';
 import errorHandler from './utils/errorHandler.js';
@@ -26,6 +27,7 @@ const setupServer = () => {
 
   app.use(notFoundHandler);
   app.use(errorHandler);
+  app.use('/api-docs', swaggerDocs());
 
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
