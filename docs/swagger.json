@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "version": "1.0.0",
-    "title": "Contacts app",
+    "title": "Water tracker app",
     "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -14,13 +14,13 @@
       "url": "http://localhost:3000"
     },
     {
-      "url": "https://browser-battalion-3-0-backend-kyxl.onrender.com/auth"
+      "url": "https://browser-battalion-3-0-backend-kyxl.onrender.com"
     }
   ],
   "tags": [
     {
-      "name": "Contacts",
-      "description": "Operations with contacts"
+      "name": "User",
+      "description": "Operations with user data"
     },
     {
       "name": "Auth",
@@ -30,7 +30,9 @@
   "paths": {
     "/register": {
       "post": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "summary": "Register a new user",
         "operationId": "registerUser",
         "security": [
@@ -62,7 +64,11 @@
                     "example": "wateRdolphinS1234"
                   }
                 },
-                "required": ["userName", "email", "password"]
+                "required": [
+                  "userName",
+                  "email",
+                  "password"
+                ]
               }
             }
           }
@@ -97,7 +103,10 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message"],
+                  "required": [
+                    "status",
+                    "message"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -117,7 +126,9 @@
     },
     "/login": {
       "post": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "summary": "Login a user",
         "operationId": "loginUser",
         "security": [
@@ -141,7 +152,10 @@
                     "example": "wateRdolphinS1234"
                   }
                 },
-                "required": ["email", "password"]
+                "required": [
+                  "email",
+                  "password"
+                ]
               }
             }
           }
@@ -182,7 +196,10 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message"],
+                  "required": [
+                    "status",
+                    "message"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -203,7 +220,10 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message"],
+                  "required": [
+                    "status",
+                    "message"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -223,7 +243,9 @@
     },
     "/logout": {
       "post": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "summary": "Logout a user",
         "operationId": "logoutUser",
         "security": [
@@ -260,7 +282,9 @@
     },
     "/refresh": {
       "post": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "summary": "Refresh user session",
         "operationId": "refreshUserSession",
         "security": [
@@ -284,7 +308,10 @@
                     "example": "dGVzdHJlZnVudDEyMw=="
                   }
                 },
-                "required": ["sessionId", "refreshToken"]
+                "required": [
+                  "sessionId",
+                  "refreshToken"
+                ]
               }
             }
           }
@@ -353,7 +380,12 @@
     "schemas": {
       "user": {
         "type": "object",
-        "required": ["id", "userName", "email", "password"],
+        "required": [
+          "id",
+          "userName",
+          "email",
+          "password"
+        ],
         "properties": {
           "id": {
             "description": "User Id",
@@ -373,7 +405,10 @@
           "gender": {
             "description": "User's gender",
             "type": "string",
-            "enum": ["male", "female"],
+            "enum": [
+              "male",
+              "female"
+            ],
             "example": "female",
             "default": "female"
           },

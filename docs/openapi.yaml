@@ -1,19 +1,19 @@
 openapi: 3.1.0
 info:
   version: 1.0.0
-  title: Contacts app
+  title: Water tracker app
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   description: This is a documentation of a water tracker app
 tags:
-  - name: Contacts
-    description: Operations with contacts
+  - name: User
+    description: Operations with user data
   - name: Auth
     description: Authentication and authorisation operations
 servers:
   - url: http://localhost:3000
-  - url: https://browser-battalion-3-0-backend-kyxl.onrender.com/auth
+  - url: https://browser-battalion-3-0-backend-kyxl.onrender.com
 paths:
   /register:
     post:
