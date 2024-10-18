@@ -7,16 +7,3 @@ security:
 responses:
   '204':
     description: 'User has been logged out; no content returned'
-  '401':
-    description: 'Unauthorized: missing or invalid token'
-    content:
-      application/json:
-        schema:
-          type: object
-          properties:
-            status:
-              type: integer
-              example: 401
-            message:
-              type: string
-              example: 'Unauthorized: invalid token'
