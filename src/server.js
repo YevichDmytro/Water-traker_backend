@@ -5,6 +5,7 @@ import cors from 'cors';
 import express from 'express';
 import pino from 'pino-http';
 
+import swaggerDocs from './middlewares/swaggerDocs.js';
 import router from './routers/index.js';
 import { env } from './utils/env.js';
 import errorHandler from './utils/errorHandler.js';
@@ -26,6 +27,7 @@ const setupServer = () => {
   app.use(logger);
 
   app.use('/', router);
+  app.use('/api-docs', swaggerDocs());
 
   app.use(notFoundHandler);
   app.use(errorHandler);
