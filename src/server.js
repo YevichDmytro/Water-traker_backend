@@ -1,3 +1,5 @@
+import path from 'node:path';
+
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
@@ -19,6 +21,7 @@ const setupServer = () => {
 
   app.use(express.json());
   app.use(cors());
+  app.use('/avatars', express.static(path.resolve('src', 'public/avatars')));
   app.use(cookieParser());
   app.use(logger);
 

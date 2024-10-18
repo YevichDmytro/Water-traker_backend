@@ -1,3 +1,6 @@
+import fs from 'node:fs/promises';
+import path from 'node:path';
+
 import createHttpError from 'http-errors';
 
 import {
@@ -6,6 +9,7 @@ import {
   createUserService,
   updateUserService,
 } from '../services/user.js';
+import { uploadToCloudinary } from '../utils/uploadCloudinary.js';
 
 export const getAllUsersController = async (req, res) => {
   const students = await getAllUsersService();
@@ -16,13 +20,16 @@ export const getAllUsersController = async (req, res) => {
 export const getUserController = async (req, res, next) => {
   const { id } = req.params;
 
-  const user = await getUserService(id);
+  const userById = await getUserService(id);
 
-  if (user === null) {
-    return next(createHttpError.NotFound('User not found!'));
+  if (
+    userById === null ||
+    userById.userId.toString() !== req.user._id.toString()
+  ) {
+    return next(createHttpError.NotFound('User not found'));
   }
 
-  res.send({ status: 200, message: `User with id:${id}`, data: user });
+  res.send({ status: 200, message: `User with id:${id}`, data: userById });
 };
 
 export const createUserController = async (req, res) => {
@@ -43,14 +50,33 @@ export const createUserController = async (req, res) => {
 export const updateUserController = async (req, res, next) => {
   const { id } = req.params;
 
-  const user = {
-    email: req.body.email,
-    password: req.body.password,
-    name: req.body.name,
-    gender: req.body.gender,
-  };
+  const changed = req.body;
 
-  const update = await updateUserService(id, user);
+  let photo = null;
+
+  if (typeof req.file !== 'undefined') {
+    if (process.env.ENABLE_CLOUDINARY === 'true') {
+      const result = await uploadToCloudinary(req.file.path);
+      await fs.unlink(req.file.path);
+
+      photo = result.secure_url;
+    } else {
+      await fs.rename(
+        req.file.path,
+        path.resolve('src', 'public/avatars', req.file.filename),
+      );
+
+      photo = `http://localhost:3000/avatars/${req.file.filename}`;
+    }
+
+    changed.photo = photo;
+  }
+
+  const update = await updateUserService(id, changed);
+
+  if (update === null) {
+    return next(createHttpError.NotFound('User not found'));
+  }
   if (update.lastErrorObject.updatedExisting === true) {
     return res.status(200).send({
       status: 200,
