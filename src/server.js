@@ -4,6 +4,7 @@ import express from 'express';
 import pino from 'pino-http';
 
 import { UPLOAD_DIR } from './constants/index.js';
+import swaggerDocs from './middlewares/swaggerDocs.js';
 import router from './routers/index.js';
 import { env } from './utils/env.js';
 import errorHandler from './utils/errorHandler.js';
@@ -25,6 +26,7 @@ const setupServer = () => {
 
   app.use('/uploads', express.static(UPLOAD_DIR));
   app.use('/', router);
+  app.use('/api-docs', swaggerDocs());
 
   app.use(notFoundHandler);
   app.use(errorHandler);
