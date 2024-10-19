@@ -1,6 +1,3 @@
-import fs from 'node:fs/promises';
-import path from 'node:path';
-
 import createHttpError from 'http-errors';
 
 import {
@@ -9,7 +6,9 @@ import {
   createUserService,
   updateUserService,
 } from '../services/user.js';
-import { uploadToCloudinary } from '../utils/uploadCloudinary.js';
+import { env } from '../utils/env.js';
+import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
+import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
 
 export const getAllUsersController = async (req, res) => {
   const students = await getAllUsersService();
@@ -49,42 +48,42 @@ export const createUserController = async (req, res) => {
 
 export const updateUserController = async (req, res, next) => {
   const { id } = req.params;
+  const { _id: userId } = req.user;
 
-  const changed = req.body;
+  const photo = req.file;
 
-  let photo = null;
+  let photoUrl;
 
-  if (typeof req.file !== 'undefined') {
-    if (process.env.ENABLE_CLOUDINARY === 'true') {
-      const result = await uploadToCloudinary(req.file.path);
-      await fs.unlink(req.file.path);
-
-      photo = result.secure_url;
+  if (photo) {
+    if (env('ENABLE_CLOUDINARY') === 'true') {
+      photoUrl = await saveFileToCloudinary(photo);
     } else {
-      await fs.rename(
-        req.file.path,
-        path.resolve('src', 'public/avatars', req.file.filename),
-      );
-
-      photo = `http://localhost:3000/avatars/${req.file.filename}`;
+      photoUrl = await saveFileToUploadDir(photo);
     }
-
-    changed.photo = photo;
   }
 
-  const update = await updateUserService(id, changed);
+  const update = await updateUserService(
+    { _id: id, userId },
+    {
+      ...req.body,
+      photo: photoUrl,
+    },
+  );
+  console.log(
+    { _id: id, userId },
+    {
+      ...req.body,
+      photo: photoUrl,
+    },
+  );
 
-  if (update === null) {
-    return next(createHttpError.NotFound('User not found'));
+  if (!update) {
+    throw createHttpError(404, 'User not found');
   }
-  if (update.lastErrorObject.updatedExisting === true) {
-    return res.status(200).send({
-      status: 200,
-      message: `Update user ${id}`,
-      data: update.value,
-    });
-  }
-  res
-    .status(201)
-    .send({ status: 201, message: 'User updated', data: update.value });
+
+  res.status(200).json({
+    status: 200,
+    message: 'Successfully patched a User!',
+    data: update.contact,
+  });
 };
