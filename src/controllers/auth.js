@@ -1,4 +1,5 @@
 import { ONE_DAY } from '../constants/index.js';
+import UsersCollection from '../db/models/Users.js';
 import {
   registerUser,
   loginUser,
@@ -17,13 +18,13 @@ export const registerUserController = async (req, res) => {
 };
 
 export const loginUserController = async (req, res) => {
-  const session = await loginUser(req.body);
+  const data = await loginUser(req.body);
 
-  res.cookie('refreshToken', session.refreshToken, {
+  res.cookie('refreshToken', data.session.refreshToken, {
     httpOnly: true,
     expires: new Date(Date.now() + ONE_DAY),
   });
-  res.cookie('sessionId', session._id, {
+  res.cookie('sessionId', data.session._id, {
     httpOnly: true,
     expires: new Date(Date.now() + ONE_DAY),
   });
@@ -32,7 +33,8 @@ export const loginUserController = async (req, res) => {
     status: 200,
     message: 'Successfully logged in an user!',
     data: {
-      accessToken: session.accessToken,
+      accessToken: data.session.accessToken,
+      user: data.user,
     },
   });
 };
