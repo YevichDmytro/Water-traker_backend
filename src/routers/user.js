@@ -21,12 +21,12 @@ router.get('/', ctrlWrapper(getAllUsersController));
 
 router.get('/:id', isValidId, ctrlWrapper(getUserController));
 
-// router.post(
-//   '/',
-//   upload.single('photo'),
-//   validationBody(createUserSchema),
-//   ctrlWrapper(createUserController),
-// );
+router.post(
+  '/',
+  upload.single('photo'),
+  validationBody(createUserSchema),
+  ctrlWrapper(createUserController),
+);
 
 router.patch(
   '/:id',
