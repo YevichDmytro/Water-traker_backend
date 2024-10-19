@@ -22,7 +22,7 @@ export const updateUserService = async (id, changed) => {
   if (!user || !user.value) return null;
 
   return {
-    contact: user.value,
+    user: user.value,
     isNew: Boolean(user?.lastErrorObject?.upserted),
   };
 };
