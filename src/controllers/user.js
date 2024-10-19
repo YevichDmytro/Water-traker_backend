@@ -48,7 +48,6 @@ export const createUserController = async (req, res) => {
 
 export const updateUserController = async (req, res, next) => {
   const { id } = req.params;
-  const { _id: userId } = req.user;
 
   const photo = req.file;
 
@@ -62,15 +61,12 @@ export const updateUserController = async (req, res, next) => {
     }
   }
 
-  const update = await updateUserService(
-    { _id: id, userId },
-    {
-      ...req.body,
-      photo: photoUrl,
-    },
-  );
+  const update = await updateUserService(id, {
+    ...req.body,
+    photo: photoUrl,
+  });
   console.log(
-    { _id: id, userId },
+    { _id: id },
     {
       ...req.body,
       photo: photoUrl,
