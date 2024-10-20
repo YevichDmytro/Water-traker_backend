@@ -99,6 +99,9 @@
           },
           "409": {
             "$ref": "#/components/responses/409"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -146,9 +149,15 @@
               "application/json": {
                 "schema": {
                   "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
+                      "description": "HTTP status code of a successful operation",
                       "example": 200
                     },
                     "message": {
@@ -157,10 +166,55 @@
                     },
                     "data": {
                       "type": "object",
+                      "required": [
+                        "accessToken",
+                        "user"
+                      ],
                       "properties": {
                         "accessToken": {
                           "type": "string",
-                          "example": "dGVzdHRva2VuMTIzCg=="
+                          "description": "User's JWT token",
+                          "example": "juUjAYnHkvvBc2NxzLQeEWyEi85SeP87jpMi/CKF"
+                        },
+                        "user": {
+                          "type": "object",
+                          "required": [
+                            "email",
+                            "gender",
+                            "waterRate"
+                          ],
+                          "properties": {
+                            "userName": {
+                              "description": "User's name",
+                              "type": "string",
+                              "example": "Anya Dolphin"
+                            },
+                            "email": {
+                              "type": "string",
+                              "description": "User's email address",
+                              "example": "dolphinslovewater@gmail.com"
+                            },
+                            "gender": {
+                              "type": "string",
+                              "description": "User's gender",
+                              "enum": [
+                                "male",
+                                "female"
+                              ],
+                              "default": "female",
+                              "example": "female"
+                            },
+                            "waterRate": {
+                              "type": "number",
+                              "description": "User's water rate",
+                              "example": 50
+                            },
+                            "photo": {
+                              "type": "string",
+                              "description": "User's profile picture",
+                              "example": "https://res.cloudinary.com/dpm5rrtxp/image/upload/v1728788643/photos/m3hzyhdgjx1nskvrirpv.jpg"
+                            }
+                          }
                         }
                       }
                     }
@@ -170,10 +224,13 @@
             }
           },
           "401": {
-            "$ref": "#/components/responses/401userdata"
+            "$ref": "#/components/responses/401"
           },
           "404": {
             "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -195,79 +252,10 @@
             "description": "User has been logged out; no content returned"
           },
           "401": {
-            "$ref": "#/components/responses/401token"
-          }
-        }
-      }
-    },
-    "/refresh": {
-      "post": {
-        "tags": [
-          "Auth"
-        ],
-        "summary": "Refresh user session",
-        "operationId": "refreshUserSession",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "sessionId": {
-                    "type": "string",
-                    "example": "634ae9f012b64a6bcd87e324"
-                  },
-                  "refreshToken": {
-                    "type": "string",
-                    "example": "dGVzdHJlZnVudDEyMw=="
-                  }
-                },
-                "required": [
-                  "sessionId",
-                  "refreshToken"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "User session successfully refreshed",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 200
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully refreshed a session!"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "accessToken": {
-                          "type": "string",
-                          "example": "dGVzdHRva2VuMTIzCg=="
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/401"
           },
-          "401": {
-            "$ref": "#/components/responses/401token"
+          "500": {
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -311,10 +299,12 @@
                   "properties": {
                     "status": {
                       "type": "integer",
+                      "description": "HTTP status code of a successful operation",
                       "example": 200
                     },
                     "message": {
                       "type": "string",
+                      "description": "A message informing that the user with the requested id was successfully found in the system",
                       "example": "User with id: 670b2f76d422221c0b0f394b!"
                     },
                     "data": {
@@ -328,6 +318,9 @@
           },
           "404": {
             "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
           }
         }
       },
@@ -418,10 +411,12 @@
                   "properties": {
                     "status": {
                       "type": "integer",
+                      "description": "HTTP status code of a successful operation",
                       "example": 200
                     },
                     "message": {
                       "type": "string",
+                      "description": "A message of a successful info update",
                       "example": "Successfully updated a user!"
                     },
                     "data": {
@@ -435,6 +430,9 @@
           },
           "404": {
             "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -451,17 +449,15 @@
       "user": {
         "type": "object",
         "required": [
-          "id",
           "userName",
           "email",
-          "password"
+          "gender",
+          "waterRate",
+          "id",
+          "createdAt",
+          "updatedAt"
         ],
         "properties": {
-          "id": {
-            "description": "User Id",
-            "type": "string",
-            "example": "634ae9f012b64a6bcd87e324"
-          },
           "userName": {
             "description": "User's name",
             "type": "string",
@@ -487,6 +483,11 @@
             "type": "number",
             "example": 50
           },
+          "id": {
+            "description": "User Id",
+            "type": "string",
+            "example": "634ae9f012b64a6bcd87e324"
+          },
           "photo": {
             "description": "User's profile picture",
             "type": "string",
@@ -508,6 +509,28 @@
       }
     },
     "responses": {
+      "401": {
+        "description": "Unauthorized: Invalid or missing token; Wrong email or password.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "description": "HTTP status code indicating an authorisation error",
+                  "example": 401
+                },
+                "message": {
+                  "type": "string",
+                  "description": "A message disclosing the authorisation error occurred",
+                  "example": "Unauthorised"
+                }
+              }
+            }
+          }
+        }
+      },
       "404": {
         "description": "User not found",
         "content": {
@@ -521,10 +544,12 @@
               "properties": {
                 "status": {
                   "type": "integer",
+                  "description": "HTTP status code indicating the user was not found in the system",
                   "example": 404
                 },
                 "message": {
                   "type": "string",
+                  "description": "A message disclosing that no user matches the provided credentials",
                   "example": "User not found"
                 }
               }
@@ -545,10 +570,12 @@
               "properties": {
                 "status": {
                   "type": "integer",
+                  "description": "HTTP status code indicating a conflict due to duplicating data",
                   "example": 409
                 },
                 "message": {
                   "type": "string",
+                  "description": "A message specifying the conflict of duplication",
                   "example": "Email in use"
                 }
               }
@@ -556,8 +583,8 @@
           }
         }
       },
-      "401userdata": {
-        "description": "Unauthorized: wrong email or password",
+      "500": {
+        "description": "Internal Server Error",
         "content": {
           "application/json": {
             "schema": {
@@ -569,31 +596,13 @@
               "properties": {
                 "status": {
                   "type": "integer",
-                  "example": 401
+                  "description": "HTTP status code indicating a server error",
+                  "example": 500
                 },
                 "message": {
                   "type": "string",
-                  "example": "Unauthorized"
-                }
-              }
-            }
-          }
-        }
-      },
-      "401token": {
-        "description": "Unauthorized: Invalid or missing token; Session not found or expired",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "integer",
-                  "example": 401
-                },
-                "message": {
-                  "type": "string",
-                  "example": "Session token expired or not found"
+                  "description": "A message indicating something went wrong on the server",
+                  "example": "Internal Server Error"
                 }
               }
             }
