@@ -16,8 +16,10 @@ export const updateUserSchema = Joi.object({
     'string.base': 'Gender must be a string.',
     'any.only': 'Gender must be one of {#valids}.',
   }),
-  waterRate: Joi.number().messages({
+  waterRate: Joi.number().min(0).max(15000).messages({
     'number.base': 'Water rate must be a number.',
+    'number.min': 'Water rate cannot be less than {#limit}.',
+    'number.max': 'Water rate cannot exceed {#limit}.',
   }),
   photo: Joi.string().uri().messages({
     'string.base': 'Photo must be a string.',

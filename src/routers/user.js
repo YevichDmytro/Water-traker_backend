@@ -18,10 +18,10 @@ router.use(authenticate);
 
 router.get('/', ctrlWrapper(getAllUsersController));
 
-router.get('/:id', isValidId, ctrlWrapper(getUserController));
+router.get('/userById', isValidId, ctrlWrapper(getUserController));
 
 router.patch(
-  '/:id',
+  '/update',
   isValidId,
   upload.single('photo'),
   validationBody(updateUserSchema),

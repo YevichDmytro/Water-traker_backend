@@ -2,9 +2,9 @@ import createHttpError from 'http-errors';
 import { isValidObjectId } from 'mongoose';
 
 const isValidId = (req, res, next) => {
-  const { id } = req.params;
+  const userId = req.user._id;
 
-  if (isValidObjectId(id) !== true) {
+  if (isValidObjectId(userId) !== true) {
     return next(createHttpError.NotFound('Id is not valid!'));
   }
   next();
