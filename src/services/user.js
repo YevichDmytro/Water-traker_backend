@@ -4,8 +4,8 @@ export const getAllUsersService = () => {
   return User.find();
 };
 
-export const getUserService = (id) => {
-  return User.findById({ _id: id });
+export const getUserService = (userId) => {
+  return User.findById({ _id: userId });
 };
 
 export const updateUserService = async (id, changed) => {
