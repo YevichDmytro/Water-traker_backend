@@ -8,10 +8,6 @@ export const getUserService = (id) => {
   return User.findById({ _id: id });
 };
 
-export const createUserService = (payload) => {
-  return User.create(payload);
-};
-
 export const updateUserService = async (id, changed) => {
   const user = await User.findByIdAndUpdate({ _id: id }, changed, {
     new: true,
@@ -22,7 +18,7 @@ export const updateUserService = async (id, changed) => {
   if (!user || !user.value) return null;
 
   return {
-    contact: user.value,
+    user: user.value,
     isNew: Boolean(user?.lastErrorObject?.upserted),
   };
 };

@@ -3,7 +3,6 @@ import createHttpError from 'http-errors';
 import {
   getAllUsersService,
   getUserService,
-  createUserService,
   updateUserService,
 } from '../services/user.js';
 import { env } from '../utils/env.js';
@@ -31,24 +30,8 @@ export const getUserController = async (req, res, next) => {
   res.send({ status: 200, message: `User with id:${id}`, data: userById });
 };
 
-export const createUserController = async (req, res) => {
-  const user = {
-    email: req.body.email,
-    password: req.body.password,
-    name: req.body.name,
-    gender: req.body.gender,
-  };
-
-  const createUser = await createUserService(user);
-
-  res
-    .status(201)
-    .send({ status: 201, message: 'Created User!', data: createUser });
-};
-
 export const updateUserController = async (req, res, next) => {
   const { id } = req.params;
-  const { _id: userId } = req.user;
 
   const photo = req.file;
 
@@ -62,15 +45,12 @@ export const updateUserController = async (req, res, next) => {
     }
   }
 
-  const update = await updateUserService(
-    { _id: id, userId },
-    {
-      ...req.body,
-      photo: photoUrl,
-    },
-  );
+  const update = await updateUserService(id, {
+    ...req.body,
+    photo: photoUrl,
+  });
   console.log(
-    { _id: id, userId },
+    { _id: id },
     {
       ...req.body,
       photo: photoUrl,
@@ -84,6 +64,6 @@ export const updateUserController = async (req, res, next) => {
   res.status(200).json({
     status: 200,
     message: 'Successfully patched a User!',
-    data: update.contact,
+    update: update.user,
   });
 };
