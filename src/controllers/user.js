@@ -3,7 +3,6 @@ import createHttpError from 'http-errors';
 import {
   getAllUsersService,
   getUserService,
-  createUserService,
   updateUserService,
 } from '../services/user.js';
 import { env } from '../utils/env.js';
@@ -29,21 +28,6 @@ export const getUserController = async (req, res, next) => {
   }
 
   res.send({ status: 200, message: `User with id:${id}`, data: userById });
-};
-
-export const createUserController = async (req, res) => {
-  const user = {
-    email: req.body.email,
-    password: req.body.password,
-    name: req.body.name,
-    gender: req.body.gender,
-  };
-
-  const createUser = await createUserService(user);
-
-  res
-    .status(201)
-    .send({ status: 201, message: 'Created User!', data: createUser });
 };
 
 export const updateUserController = async (req, res, next) => {
