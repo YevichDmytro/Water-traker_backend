@@ -41,34 +41,6 @@ responses:
                   type: string
                   example: 'dGVzdHRva2VuMTIzCg=='
   '404':
-    description: User not found
-    content:
-      application/json:
-        schema:
-          type: object
-          required:
-            - status
-            - message
-          properties:
-            status:
-              type: integer
-              example: 404
-            message:
-              type: string
-              example: 'User not found'
+    $ref: '../../components/responses/404.yaml'
   '401':
-    description: 'Unauthorized: wrong email or password'
-    content:
-      application/json:
-        schema:
-          type: object
-          required:
-            - status
-            - message
-          properties:
-            status:
-              type: integer
-              example: 401
-            message:
-              type: string
-              example: 'Unauthorized'
+    $ref: '../../components/responses/401userdata.yaml'

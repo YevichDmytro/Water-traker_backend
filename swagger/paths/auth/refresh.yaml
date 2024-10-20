@@ -41,15 +41,4 @@ responses:
                   type: string
                   example: 'dGVzdHRva2VuMTIzCg=='
   '401':
-    description: 'Unauthorized: Session not found or expired'
-    content:
-      application/json:
-        schema:
-          type: object
-          properties:
-            status:
-              type: integer
-              example: 401
-            message:
-              type: string
-              example: 'Session token expired or not found'
+    $ref: ../../components/responses/401token.yaml
