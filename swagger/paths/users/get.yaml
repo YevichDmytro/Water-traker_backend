@@ -1,5 +1,5 @@
 tags:
-  - Users
+  - User
 summary: Get user's data by id
 operationId: getUserById
 description: 'Returns a specific user with their data'

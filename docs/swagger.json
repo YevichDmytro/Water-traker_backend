@@ -30,7 +30,9 @@
   "paths": {
     "/register": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Register a new user",
         "operationId": "registerUser",
         "security": [
@@ -62,7 +64,11 @@
                     "example": "wateRdolphinS1234"
                   }
                 },
-                "required": ["userName", "email", "password"]
+                "required": [
+                  "userName",
+                  "email",
+                  "password"
+                ]
               }
             }
           }
@@ -99,7 +105,9 @@
     },
     "/login": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Login a user",
         "operationId": "loginUser",
         "security": [
@@ -123,7 +131,10 @@
                     "example": "wateRdolphinS1234"
                   }
                 },
-                "required": ["email", "password"]
+                "required": [
+                  "email",
+                  "password"
+                ]
               }
             }
           }
@@ -169,7 +180,9 @@
     },
     "/logout": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Logout a user",
         "operationId": "logoutUser",
         "security": [
@@ -189,7 +202,9 @@
     },
     "/refresh": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Refresh user session",
         "operationId": "refreshUserSession",
         "security": [
@@ -213,7 +228,10 @@
                     "example": "dGVzdHJlZnVudDEyMw=="
                   }
                 },
-                "required": ["sessionId", "refreshToken"]
+                "required": [
+                  "sessionId",
+                  "refreshToken"
+                ]
               }
             }
           }
@@ -256,7 +274,9 @@
     },
     "/{id}": {
       "get": {
-        "tags": ["Users"],
+        "tags": [
+          "User"
+        ],
         "summary": "Get user's data by id",
         "operationId": "getUserById",
         "description": "Returns a specific user with their data",
@@ -283,7 +303,11 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message", "data"],
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -308,7 +332,9 @@
         }
       },
       "patch": {
-        "tags": ["Users"],
+        "tags": [
+          "User"
+        ],
         "summary": "Update user",
         "operationId": "updateUser",
         "description": "Update one or several user's properties",
@@ -354,7 +380,10 @@
                   "gender": {
                     "description": "User's gender",
                     "type": "string",
-                    "enum": ["male", "female"],
+                    "enum": [
+                      "male",
+                      "female"
+                    ],
                     "example": "female",
                     "default": "female"
                   },
@@ -381,7 +410,11 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message", "data"],
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -417,7 +450,12 @@
     "schemas": {
       "user": {
         "type": "object",
-        "required": ["id", "userName", "email", "password"],
+        "required": [
+          "id",
+          "userName",
+          "email",
+          "password"
+        ],
         "properties": {
           "id": {
             "description": "User Id",
@@ -437,7 +475,10 @@
           "gender": {
             "description": "User's gender",
             "type": "string",
-            "enum": ["male", "female"],
+            "enum": [
+              "male",
+              "female"
+            ],
             "example": "female",
             "default": "female"
           },
@@ -473,7 +514,10 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": ["status", "message"],
+              "required": [
+                "status",
+                "message"
+              ],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -494,7 +538,10 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": ["status", "message"],
+              "required": [
+                "status",
+                "message"
+              ],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -515,7 +562,10 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": ["status", "message"],
+              "required": [
+                "status",
+                "message"
+              ],
               "properties": {
                 "status": {
                   "type": "integer",
