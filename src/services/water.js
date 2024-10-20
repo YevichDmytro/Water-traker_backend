@@ -39,7 +39,6 @@ export const getWaterTodayService = async (userId) => {
   const startOfDay = new Date(currentDate.setHours(0, 0, 0, 0));
   const endOfDay = new Date(currentDate.setHours(23, 59, 59, 999));
 
-  // formating to format DD-MM-YY HH:MM:SS
   const startOfDayString = formatDateTime(startOfDay);
   const endOfDayString = formatDateTime(endOfDay);
 
@@ -85,7 +84,6 @@ export const getWaterByMonthService = async (userId, month, year) => {
 
   const dailyNorma = user.waterRate;
 
-  /// start and end of month
   const monthString = String(month).padStart(2, '0');
   const startOfMonth = `01-${monthString}-${year}`;
   const endOfMonth = `${new Date(
@@ -117,19 +115,16 @@ export const getWaterByMonthService = async (userId, month, year) => {
     };
   }
 
-  // Заполняем данные из записей о потреблении воды
   waterRecords.forEach((record) => {
-    const [datePart] = record.dateTime.split(' '); // Извлекаем часть с датой (DD-MM-YYYY)
+    const [datePart] = record.dateTime.split(' ');
     const formattedDate = datePart.trim();
 
-    // Проверяем, что день уже инициализирован
     if (dailyConsumption[formattedDate]) {
       dailyConsumption[formattedDate].totalWater += record.value || 0;
       dailyConsumption[formattedDate].count += 1;
     }
   });
 
-  // Формируем результат
   return Object.entries(dailyConsumption).map(
     ([date, { totalWater, count }]) => {
       const goalPercentage = (totalWater / dailyNorma) * 100;
@@ -137,9 +132,9 @@ export const getWaterByMonthService = async (userId, month, year) => {
       return {
         date,
         dailyNorma: `${dailyNorma} L`,
-        goalPercentage: Math.min(goalPercentage, 100), // Процент не должен превышать 100%
+        goalPercentage: Math.min(goalPercentage, 100),
         consumptionCount: count,
-        value: totalWater, // Добавляем значение потребленной воды
+        value: totalWater,
       };
     },
   );

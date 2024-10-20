@@ -24,7 +24,7 @@ export const updateWaterSchema = Joi.object({
 
 export const dateSchema = Joi.object({
   date: Joi.string()
-    .pattern(/^\d{2}-\d{2}-\d{4}$/) // Формат DD-MM-YYYY
+    .pattern(/^\d{2}-\d{2}-\d{4}$/)
     .required()
     .messages({
       'string.pattern.base': 'Date must be in the format MM-YYYY',
@@ -34,7 +34,7 @@ export const dateSchema = Joi.object({
 
 export const monthSchema = Joi.object({
   date: Joi.string()
-    .pattern(/^\d{1,2}-\d{4}$/) // Формат MM-YYYY
+    .pattern(/^\d{1,2}-\d{4}$/)
     .required()
     .messages({
       'string.pattern.base': 'Date must be in the format MM-YYYY',
