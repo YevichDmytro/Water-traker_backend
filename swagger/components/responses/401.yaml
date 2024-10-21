@@ -1,0 +1,14 @@
+description: 'Unauthorized: Invalid or missing token; Wrong email or password.'
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        status:
+          type: integer
+          description: HTTP status code indicating an authorisation error
+          example: 401
+        message:
+          type: string
+          description: A message disclosing the authorisation error occurred
+          example: 'Unauthorised'

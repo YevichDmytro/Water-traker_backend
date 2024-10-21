@@ -1,14 +1,13 @@
 type: object
 required:
-  - id
   - userName
   - email
-  - password
+  - gender
+  - waterRate
+  - id
+  - createdAt
+  - updatedAt
 properties:
-  id:
-    description: 'User Id'
-    type: string
-    example: '634ae9f012b64a6bcd87e324'
   userName:
     description: "User's name"
     type: string
@@ -29,6 +28,10 @@ properties:
     description: "User's water rate"
     type: number
     example: 50
+  id:
+    description: 'User Id'
+    type: string
+    example: '634ae9f012b64a6bcd87e324'
   photo:
     description: "User's profile picture"
     type: string

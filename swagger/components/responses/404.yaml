@@ -9,7 +9,9 @@ content:
       properties:
         status:
           type: integer
+          description: HTTP status code indicating the user was not found in the system
           example: 404
         message:
           type: string
+          description: A message disclosing that no user matches the provided credentials
           example: 'User not found'
