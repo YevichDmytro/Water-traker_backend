@@ -98,28 +98,10 @@
             }
           },
           "409": {
-            "description": "Email already in use",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "message"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 409
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Email in use"
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/409"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -167,9 +149,15 @@
               "application/json": {
                 "schema": {
                   "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
+                      "description": "HTTP status code of a successful operation",
                       "example": 200
                     },
                     "message": {
@@ -178,10 +166,55 @@
                     },
                     "data": {
                       "type": "object",
+                      "required": [
+                        "accessToken",
+                        "user"
+                      ],
                       "properties": {
                         "accessToken": {
                           "type": "string",
-                          "example": "dGVzdHRva2VuMTIzCg=="
+                          "description": "User's JWT token",
+                          "example": "juUjAYnHkvvBc2NxzLQeEWyEi85SeP87jpMi/CKF"
+                        },
+                        "user": {
+                          "type": "object",
+                          "required": [
+                            "email",
+                            "gender",
+                            "waterRate"
+                          ],
+                          "properties": {
+                            "userName": {
+                              "description": "User's name",
+                              "type": "string",
+                              "example": "Anya Dolphin"
+                            },
+                            "email": {
+                              "type": "string",
+                              "description": "User's email address",
+                              "example": "dolphinslovewater@gmail.com"
+                            },
+                            "gender": {
+                              "type": "string",
+                              "description": "User's gender",
+                              "enum": [
+                                "male",
+                                "female"
+                              ],
+                              "default": "female",
+                              "example": "female"
+                            },
+                            "waterRate": {
+                              "type": "number",
+                              "description": "User's water rate",
+                              "example": 50
+                            },
+                            "photo": {
+                              "type": "string",
+                              "description": "User's profile picture",
+                              "example": "https://res.cloudinary.com/dpm5rrtxp/image/upload/v1728788643/photos/m3hzyhdgjx1nskvrirpv.jpg"
+                            }
+                          }
                         }
                       }
                     }
@@ -191,52 +224,13 @@
             }
           },
           "401": {
-            "description": "Unauthorized: wrong email or password",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "message"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 401
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Unauthorized"
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/401"
           },
           "404": {
-            "description": "User not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "message"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 404
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "User not found"
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -256,95 +250,189 @@
         "responses": {
           "204": {
             "description": "User has been logged out; no content returned"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
           }
         }
       }
     },
-    "/refresh": {
-      "post": {
+    "/{id}": {
+      "get": {
         "tags": [
-          "Auth"
+          "User"
         ],
-        "summary": "Refresh user session",
-        "operationId": "refreshUserSession",
+        "summary": "Get user's data by id",
+        "operationId": "getUserById",
+        "description": "Returns a specific user with their data",
         "security": [
           {
             "bearerAuth": []
           }
         ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "sessionId": {
-                    "type": "string",
-                    "example": "634ae9f012b64a6bcd87e324"
-                  },
-                  "refreshToken": {
-                    "type": "string",
-                    "example": "dGVzdHJlZnVudDEyMw=="
-                  }
-                },
-                "required": [
-                  "sessionId",
-                  "refreshToken"
-                ]
-              }
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "670b2f76d422221c0b0f394b"
             }
           }
-        },
+        ],
         "responses": {
           "200": {
-            "description": "User session successfully refreshed",
+            "description": "The requested user and their data was found",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
+                      "description": "HTTP status code of a successful operation",
                       "example": 200
                     },
                     "message": {
                       "type": "string",
-                      "example": "Successfully refreshed a session!"
+                      "description": "A message informing that the user with the requested id was successfully found in the system",
+                      "example": "User with id: 670b2f76d422221c0b0f394b!"
                     },
                     "data": {
                       "type": "object",
-                      "properties": {
-                        "accessToken": {
-                          "type": "string",
-                          "example": "dGVzdHRva2VuMTIzCg=="
-                        }
-                      }
+                      "$ref": "#/components/schemas/user"
                     }
                   }
                 }
               }
             }
           },
-          "401": {
-            "description": "Unauthorized: Session not found or expired",
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Update user",
+        "operationId": "updateUser",
+        "description": "Update one or several user's properties",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "65ca67e7ae7f10c88b598384"
+            },
+            "description": "The ID of the user to update"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "description": "User's email",
+                    "type": "string",
+                    "pattern": "^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$",
+                    "example": "dolphinslovewater@gmail.com"
+                  },
+                  "password": {
+                    "description": "User's password",
+                    "type": "string",
+                    "example": "wateRdolphinS1234"
+                  },
+                  "userName": {
+                    "description": "User's name",
+                    "type": "string",
+                    "example": "Anya Dolphin"
+                  },
+                  "gender": {
+                    "description": "User's gender",
+                    "type": "string",
+                    "enum": [
+                      "male",
+                      "female"
+                    ],
+                    "example": "female",
+                    "default": "female"
+                  },
+                  "waterRate": {
+                    "description": "User's water rate",
+                    "type": "number",
+                    "example": 50
+                  },
+                  "photo": {
+                    "description": "User's profile picture",
+                    "type": "string",
+                    "format": "binary",
+                    "example": "https://res.cloudinary.com/dpm5rrtxp/image/upload/v1728788643/photos/m3hzyhdgjx1nskvrirpv.jpg"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The user's info has been updated",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
-                      "example": 401
+                      "description": "HTTP status code of a successful operation",
+                      "example": 200
                     },
                     "message": {
                       "type": "string",
-                      "example": "Session token expired or not found"
+                      "description": "A message of a successful info update",
+                      "example": "Successfully updated a user!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/user"
                     }
                   }
                 }
               }
             }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -361,17 +449,15 @@
       "user": {
         "type": "object",
         "required": [
-          "id",
           "userName",
           "email",
-          "password"
+          "gender",
+          "waterRate",
+          "id",
+          "createdAt",
+          "updatedAt"
         ],
         "properties": {
-          "id": {
-            "description": "User Id",
-            "type": "string",
-            "example": "634ae9f012b64a6bcd87e324"
-          },
           "userName": {
             "description": "User's name",
             "type": "string",
@@ -397,6 +483,11 @@
             "type": "number",
             "example": 50
           },
+          "id": {
+            "description": "User Id",
+            "type": "string",
+            "example": "634ae9f012b64a6bcd87e324"
+          },
           "photo": {
             "description": "User's profile picture",
             "type": "string",
@@ -413,6 +504,108 @@
             "type": "string",
             "format": "date-time",
             "example": "2023-10-18T12:34:56Z"
+          }
+        }
+      }
+    },
+    "responses": {
+      "401": {
+        "description": "Unauthorized: Invalid or missing token; Wrong email or password.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "description": "HTTP status code indicating an authorisation error",
+                  "example": 401
+                },
+                "message": {
+                  "type": "string",
+                  "description": "A message disclosing the authorisation error occurred",
+                  "example": "Unauthorised"
+                }
+              }
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "User not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "description": "HTTP status code indicating the user was not found in the system",
+                  "example": 404
+                },
+                "message": {
+                  "type": "string",
+                  "description": "A message disclosing that no user matches the provided credentials",
+                  "example": "User not found"
+                }
+              }
+            }
+          }
+        }
+      },
+      "409": {
+        "description": "Email already in use",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "description": "HTTP status code indicating a conflict due to duplicating data",
+                  "example": 409
+                },
+                "message": {
+                  "type": "string",
+                  "description": "A message specifying the conflict of duplication",
+                  "example": "Email in use"
+                }
+              }
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Internal Server Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "description": "HTTP status code indicating a server error",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "description": "A message indicating something went wrong on the server",
+                  "example": "Internal Server Error"
+                }
+              }
+            }
           }
         }
       }

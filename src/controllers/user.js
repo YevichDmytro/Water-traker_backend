@@ -24,7 +24,11 @@ export const getUserController = async (req, res, next) => {
     return next(createHttpError.NotFound('User not found'));
   }
 
-  res.send({ status: 200, message: `User with id:${userId}`, data: userById });
+  res.send({
+    status: 200,
+    message: `User with id:${userId} successfully found`,
+    data: userById,
+  });
 };
 
 export const updateUserController = async (req, res, next) => {
@@ -46,13 +50,6 @@ export const updateUserController = async (req, res, next) => {
     ...req.body,
     photo: photoUrl,
   });
-  // console.log(
-  //   { _id: id },
-  //   {
-  //     ...req.body,
-  //     photo: photoUrl,
-  //   },
-  // );
 
   if (!update) {
     throw createHttpError(404, 'User not found');
