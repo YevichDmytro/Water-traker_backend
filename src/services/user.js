@@ -4,8 +4,15 @@ export const getAllUsersService = () => {
   return User.find();
 };
 
-export const getUserService = (userId) => {
-  return User.findById({ _id: userId });
+export const getUserService = async (userId) => {
+  const user = await User.findById({ _id: userId });
+  return {
+    name: user.name,
+    email: user.email,
+    gender: user.gender,
+    waterRate: user.waterRate,
+    photo: user.photo,
+  };
 };
 
 export const updateUserService = async (id, changed) => {
