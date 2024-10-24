@@ -64,11 +64,14 @@ export const deleteWaterController = async (req, res, next) => {
     return;
   }
 
-  res.status(204).send();
+res.status(204).send();
+
 };
 
+
+
 export const getWaterTodayController = async (req, res) => {
-  const userId = req.user.id;
+  const userId = req.user._id;
 
   const waterData = await getWaterTodayService(userId);
   res.status(200).json({

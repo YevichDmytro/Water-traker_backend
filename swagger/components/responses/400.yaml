@@ -1,0 +1,14 @@
+description: Invalid input data; required fields are missing, invalid date format
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        status:
+          type: integer
+          description: HTTP status code of the error
+          example: 400
+        message:
+          type: string
+          description: Error message indicating that the provided email, password length or date format is invalid or a required field is missing
+          example: 'Invalid email format or password length.'

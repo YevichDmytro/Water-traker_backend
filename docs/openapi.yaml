@@ -7,31 +7,49 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   description: This is a documentation of a water tracker app
 tags:
-  - name: User
-    description: Operations with user data
   - name: Auth
     description: Authentication and authorisation operations
+  - name: User
+    description: Operations with user data
+  - name: Water
+    description: Documenting consumed water
 servers:
-  - url: http://localhost:3000
   - url: https://browser-battalion-3-0-backend-kyxl.onrender.com
+  - url: http://localhost:3000
 paths:
-  /register:
+  /auth/register:
     post:
-      $ref: ../swagger/paths/auth/register.yaml
-  /login:
+      $ref: '../swagger/paths/auth/register.yaml'
+  /auth/login:
     post:
-      $ref: ../swagger/paths/auth/login.yaml
-  /logout:
+      $ref: '../swagger/paths/auth/login.yaml'
+  /auth/logout:
     post:
-      $ref: ../swagger/paths/auth/logout.yaml
-  /refresh:
-    post:
-      $ref: ../swagger/paths/auth/refresh.yaml
-  /{id}:
+      $ref: '../swagger/paths/auth/logout.yaml'
+  /user/userById:
     get:
-      $ref: ../swagger/paths/users/get.yaml
+      $ref: '../swagger/paths/user/get.yaml'
+  /user/update:
     patch:
-      $ref: ../swagger/paths/users/patch.yaml
+      $ref: '../swagger/paths/user/patch.yaml'
+  /water:
+    # get:
+    #   $ref: ../swagger/paths/water/get.yaml
+    post:
+      $ref: '../swagger/paths/water/post.yaml'
+  /water/{id}:
+    patch:
+      $ref: '../swagger/paths/water/{id}/patch.yaml'
+    delete:
+      $ref: '../swagger/paths/water/{id}/delete.yaml'
+  # /water/day:
+  #   get:
+  /water/day/{date}:
+    get:
+      $ref: '../swagger/paths/water/day/get.yaml'
+  /water/month/{date}:
+    get:
+      $ref: '../swagger/paths/water/month/get.yaml'
 components:
   securitySchemes:
     bearerAuth:

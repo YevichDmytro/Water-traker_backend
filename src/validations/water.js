@@ -14,6 +14,7 @@ export const createWaterSchema = Joi.object({
         'dateTime must be in the format DD-MM-YYYY HH:mm:ss',
       'any.required': 'dateTime is required',
     }),
+ 
 });
 
 export const updateWaterSchema = Joi.object({
@@ -30,7 +31,9 @@ export const updateWaterSchema = Joi.object({
         'dateTime must be in the format DD-MM-YYYY HH:mm:ss',
       'any.required': 'dateTime is required',
     }),
+
 });
+
 
 export const monthSchema = Joi.object({
   date: Joi.string()

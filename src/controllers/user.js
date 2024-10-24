@@ -10,28 +10,29 @@ import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
 import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
 
 export const getAllUsersController = async (req, res) => {
-  const students = await getAllUsersService();
+  const user = await getAllUsersService();
 
-  res.send({ status: 200, data: students });
+  res.send({ status: 200, data: user });
 };
 
 export const getUserController = async (req, res, next) => {
-  const { id } = req.params;
+  const userId = req.user._id;
 
-  const userById = await getUserService(id);
+  const userById = await getUserService(userId);
 
-  if (
-    userById === null ||
-    userById.userId.toString() !== req.user._id.toString()
-  ) {
+  if (userById === null) {
     return next(createHttpError.NotFound('User not found'));
   }
 
-  res.send({ status: 200, message: `User with id:${id}`, data: userById });
+  res.send({
+    status: 200,
+    message: `User with id:${userId} successfully found`,
+    data: userById,
+  });
 };
 
 export const updateUserController = async (req, res, next) => {
-  const { id } = req.params;
+  const userId = req.user._id;
 
   const photo = req.file;
 
@@ -45,17 +46,10 @@ export const updateUserController = async (req, res, next) => {
     }
   }
 
-  const update = await updateUserService(id, {
+  const update = await updateUserService(userId, {
     ...req.body,
     photo: photoUrl,
   });
-  console.log(
-    { _id: id },
-    {
-      ...req.body,
-      photo: photoUrl,
-    },
-  );
 
   if (!update) {
     throw createHttpError(404, 'User not found');
@@ -64,6 +58,6 @@ export const updateUserController = async (req, res, next) => {
   res.status(200).json({
     status: 200,
     message: 'Successfully patched a User!',
-    update: update.user,
+    data: update.user,
   });
 };

@@ -1,0 +1,19 @@
+type: object
+properties:
+  _id:
+    type: string
+    description: 'Id of a particular water consumption record'
+    example: '60b2f76d422221c0b0f394a1'
+  value:
+    type: number
+    description: 'Amount of a one-time water consumption in milliliters'
+    example: 150
+  dateTime:
+    type: string
+    description: "The date and time of water consumption. Must be in 'YYYY-MM-DDTHH:mm:ss' format"
+    format: date-time
+    example: '2024-10-23T14:20:00'
+  userId:
+    type: string
+    description: 'ID of the user who created the water record'
+    example: '60b2f76d422221c0b0f394b'

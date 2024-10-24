@@ -5,13 +5,6 @@ operationId: getUserById
 description: 'Returns a specific user with their data'
 security:
   - bearerAuth: []
-parameters:
-  - in: path
-    name: id
-    required: true
-    schema:
-      type: string
-      example: '670b2f76d422221c0b0f394b'
 responses:
   '200':
     description: 'The requested user and their data was found'
@@ -26,12 +19,16 @@ responses:
           properties:
             status:
               type: integer
+              description: HTTP status code of a successful operation
               example: 200
             message:
               type: string
-              example: 'User with id: 670b2f76d422221c0b0f394b!'
+              description: A message informing that the user with the requested id was successfully found in the system
+              example: 'User with id: 670b2f76d422221c0b0f394b successfully found!'
             data:
               type: object
               $ref: '../../components/schemas/user.yaml'
   '404':
     $ref: '../../components/responses/404.yaml'
+  '500':
+    $ref: '../../components/responses/500.yaml'

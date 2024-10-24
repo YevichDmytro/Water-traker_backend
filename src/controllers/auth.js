@@ -1,10 +1,10 @@
 import { ONE_DAY } from '../constants/index.js';
-import UsersCollection from '../db/models/Users.js';
+
 import {
   registerUser,
   loginUser,
   logoutUser,
-  refreshUsersSession,
+  refreshUserSession,
 } from '../services/auth.js';
 
 export const registerUserController = async (req, res) => {
@@ -40,12 +40,13 @@ export const loginUserController = async (req, res) => {
 };
 
 export const logoutUserController = async (req, res) => {
-  if (req.cookies.sessionId) {
-    await logoutUser(req.cookies.sessionId);
+  const { sessionId } = req.cookies;
+  if (typeof sessionId === 'string') {
+    await logoutUser(sessionId);
   }
 
-  res.clearCookie('sessionId');
   res.clearCookie('refreshToken');
+  res.clearCookie('sessionId');
 
   res.status(204).send();
 };
@@ -62,9 +63,10 @@ const setupSession = (res, session) => {
 };
 
 export const refreshUserSessionController = async (req, res) => {
-  const session = await refreshUsersSession({
-    sessionId: req.cookies.sessionId,
-    refreshToken: req.cookies.refreshToken,
+  const { sessionId, refreshToken } = req.cookies;
+  const session = await refreshUserSession({
+    sessionId,
+    refreshToken,
   });
 
   setupSession(res, session);
@@ -77,3 +79,4 @@ export const refreshUserSessionController = async (req, res) => {
     },
   });
 };
+
