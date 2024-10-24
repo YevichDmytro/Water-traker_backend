@@ -1,0 +1,16 @@
+type: object
+required:
+  - value
+  - dateTime
+properties:
+  value:
+    type: number
+    description: 'The amount of water consumed, in milliliters (must be between 50 and 5000).'
+    minimum: 50
+    maximum: 5000
+    example: 150
+  dateTime:
+    type: string
+    format: date-time
+    description: 'The date and time of water consumption.'
+    example: '2024-10-23T14:20:00'

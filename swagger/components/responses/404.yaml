@@ -1,4 +1,4 @@
-description: User not found
+description: User / water record(s) not found
 content:
   application/json:
     schema:
@@ -9,9 +9,9 @@ content:
       properties:
         status:
           type: integer
-          description: HTTP status code indicating the user was not found in the system
+          description: HTTP status code indicating the user or the water record(s) was not found in the system
           example: 404
         message:
           type: string
-          description: A message disclosing that no user matches the provided credentials
+          description: A message disclosing that no user or water record or records matches the provided credentials or parameters
           example: 'User not found'
