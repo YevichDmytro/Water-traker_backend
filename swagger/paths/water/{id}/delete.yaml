@@ -1,0 +1,40 @@
+tags:
+  - Water
+summary: Delete water consumption record
+operationId: deleteWater
+description: Delete an existing water consumption record by id
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: id
+    description: The id of the water consumption record to delete
+    required: true
+    schema:
+      type: string
+      example: '60b2f76d422221c0b0f394a1'
+responses:
+  '200':
+    description: Water record deleted successfully
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              description: HTTP status code indicating that the record was successfully deleted
+              example: 200
+            data:
+              type: object
+              properties:
+                id:
+                  type: string
+                  description: The id of the deleted water consumption record
+                  example: '60b2f76d422221c0b0f394a1'
+  '400':
+    $ref: ../../../components/responses/400.yaml
+  '404':
+    $ref: ../../../components/responses/404.yaml
+  '500':
+    $ref: ../../../components/responses/500.yaml

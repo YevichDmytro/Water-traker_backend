@@ -1,0 +1,58 @@
+tags:
+  - Water
+summary: Get water consumption records by month
+operationId: getWaterByMonth
+description: Return water consumption records for a specific month and year
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: date
+    description: "The month and year for which to retrieve water consumption records in 'MM-YYYY' format"
+    required: true
+    schema:
+      type: string
+      example: '10-2024'
+responses:
+  '200':
+    description: Water records found for the specific month
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              description: HTTP status code indicating the records were successfully found
+              example: 200
+            message:
+              type: string
+              description: Confirmation message that records were found
+              example: Water consumption data per month found successfully!
+            data:
+              type: array
+              items:
+                type: object
+                properties:
+                  date:
+                    type: string
+                    description: "The specific date for the record in format: 'number, month'"
+                    example: '24, October'
+                  dailyNorma:
+                    type: string
+                    description: The user's daily water consumption goal in liters
+                    example: '1.5 L'
+                  goalPercentage:
+                    type: number
+                    description: Percentage of the daily water goal consumed
+                    example: 80
+                  consumptionCount:
+                    type: integer
+                    description: The number of consumption records for that date
+                    example: 6
+  '400':
+    $ref: ../../../components/responses/400.yaml
+  '404':
+    $ref: ../../../components/responses/404.yaml
+  '500':
+    $ref: ../../../components/responses/500.yaml
