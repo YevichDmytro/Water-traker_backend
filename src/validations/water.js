@@ -5,8 +5,8 @@ export const createWaterSchema = Joi.object({
     'number.base': 'Value must be a number',
     'any.required': 'Value is required ',
   }),
-  dateTime: Joi.string().messages({
-    'string.base': 'dateTime must be a string in foramt YYYY-MM-DDTHH:mm:ss',
+  dateTime: Joi.string().required().messages({
+    'string.base': 'dateTime must be a string in format YYYY-MM-DDTHH:mm:ss',
     'any.required': 'dateTime is required ',
   }),
 });
@@ -17,7 +17,7 @@ export const updateWaterSchema = Joi.object({
     'any.required': 'Value is required ',
   }),
   dateTime: Joi.string().messages({
-    'string.base': 'dateTime must be a string in foramt YYYY-MM-DDTHH:mm:ss',
+    'string.base': 'dateTime must be a string in format YYYY-MM-DDTHH:mm:ss',
     'any.required': 'dateTime is required ',
   }),
 });
