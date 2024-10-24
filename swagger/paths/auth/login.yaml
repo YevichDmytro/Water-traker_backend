@@ -56,7 +56,7 @@ responses:
                     - gender
                     - waterRate
                   properties:
-                    userName:
+                    name:
                       description: User's name
                       type: string
                       example: Anya Dolphin

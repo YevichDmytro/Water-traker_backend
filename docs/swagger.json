@@ -165,7 +165,7 @@
                           "type": "object",
                           "required": ["email", "gender", "waterRate"],
                           "properties": {
-                            "userName": {
+                            "name": {
                               "description": "User's name",
                               "type": "string",
                               "example": "Anya Dolphin"

@@ -7,10 +7,10 @@ export const updateUserSchema = Joi.object({
   password: Joi.string().messages({
     'string.base': 'Password must be a string.',
   }),
-  userName: Joi.string().min(3).max(30).messages({
-    'string.base': 'Username should be a string.',
-    'string.min': 'Username should be at least {#limit} characters.',
-    'string.max': 'Username should be at most {#limit} characters.',
+  name: Joi.string().min(3).max(30).messages({
+    'string.base': 'name should be a string.',
+    'string.min': 'name should be at least {#limit} characters.',
+    'string.max': 'name should be at most {#limit} characters.',
   }),
   gender: Joi.string().valid('male', 'female').messages({
     'string.base': 'Gender must be a string.',
