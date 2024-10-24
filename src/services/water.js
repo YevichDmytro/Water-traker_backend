@@ -24,8 +24,6 @@ export const deleteWaterService = async (id) => {
   return waterRecord;
 };
 
-export const getAllRecords = () => WaterTrackerCollection.find();
-
 export const getWaterTodayService = async (userId) => {
   const user = await UsersCollection.findById(userId);
 
@@ -61,18 +59,6 @@ export const getWaterTodayService = async (userId) => {
     records: waterRecords,
     percentageOfGoal: Math.min(percentageOfGoal, 100),
   };
-};
-
-export const getWaterByDateService = async (userId, date) => {
-  const startOfDay = `${date} 00:00:00`;
-  const endOfDay = `${date} 23:59:59`;
-
-  const water = await WaterTrackerCollection.find({
-    userId,
-    dateTime: { $gte: startOfDay, $lte: endOfDay },
-  });
-
-  return water;
 };
 
 export const getWaterByMonthService = async (userId, month, year) => {

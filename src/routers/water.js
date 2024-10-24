@@ -4,7 +4,6 @@ import {
   createWaterController,
   editWaterController,
   deleteWaterController,
-  getAllWaterController,
   getWaterByMonthController,
   getWaterTodayController,
 } from '../controllers/water.js';
@@ -37,8 +36,6 @@ waterRouter.patch(
 );
 
 waterRouter.delete('/:id', isValidId, ctrlWrapper(deleteWaterController));
-
-waterRouter.get('/', ctrlWrapper(getAllWaterController));
 
 waterRouter.get('/today', ctrlWrapper(getWaterTodayController));
 
