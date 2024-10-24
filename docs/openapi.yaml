@@ -26,9 +26,9 @@ paths:
       $ref: ../swagger/paths/auth/logout.yaml
   /{id}:
     get:
-      $ref: ../swagger/paths/users/get.yaml
+      $ref: ../swagger/paths/user/get.yaml
     patch:
-      $ref: ../swagger/paths/users/patch.yaml
+      $ref: ../swagger/paths/user/patch.yaml
 components:
   securitySchemes:
     bearerAuth:

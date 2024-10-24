@@ -11,7 +11,7 @@ requestBody:
       schema:
         type: object
         properties:
-          userName:
+          name:
             description: "User's name"
             type: string
             example: Anya Dolphin
@@ -25,7 +25,7 @@ requestBody:
             type: string
             example: 'wateRdolphinS1234'
         required:
-          - userName
+          - name
           - email
           - password
 responses:

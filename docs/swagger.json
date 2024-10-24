@@ -30,9 +30,7 @@
   "paths": {
     "/register": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Register a new user",
         "operationId": "registerUser",
         "security": [
@@ -47,7 +45,7 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "userName": {
+                  "name": {
                     "description": "User's name",
                     "type": "string",
                     "example": "Anya Dolphin"
@@ -64,11 +62,7 @@
                     "example": "wateRdolphinS1234"
                   }
                 },
-                "required": [
-                  "userName",
-                  "email",
-                  "password"
-                ]
+                "required": ["name", "email", "password"]
               }
             }
           }
@@ -108,9 +102,7 @@
     },
     "/login": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Login a user",
         "operationId": "loginUser",
         "security": [
@@ -134,10 +126,7 @@
                     "example": "wateRdolphinS1234"
                   }
                 },
-                "required": [
-                  "email",
-                  "password"
-                ]
+                "required": ["email", "password"]
               }
             }
           }
@@ -149,11 +138,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
+                  "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -166,10 +151,7 @@
                     },
                     "data": {
                       "type": "object",
-                      "required": [
-                        "accessToken",
-                        "user"
-                      ],
+                      "required": ["accessToken", "user"],
                       "properties": {
                         "accessToken": {
                           "type": "string",
@@ -178,13 +160,9 @@
                         },
                         "user": {
                           "type": "object",
-                          "required": [
-                            "email",
-                            "gender",
-                            "waterRate"
-                          ],
+                          "required": ["email", "gender", "waterRate"],
                           "properties": {
-                            "userName": {
+                            "name": {
                               "description": "User's name",
                               "type": "string",
                               "example": "Anya Dolphin"
@@ -197,10 +175,7 @@
                             "gender": {
                               "type": "string",
                               "description": "User's gender",
-                              "enum": [
-                                "male",
-                                "female"
-                              ],
+                              "enum": ["male", "female"],
                               "default": "female",
                               "example": "female"
                             },
@@ -237,9 +212,7 @@
     },
     "/logout": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Logout a user",
         "operationId": "logoutUser",
         "security": [
@@ -262,9 +235,7 @@
     },
     "/{id}": {
       "get": {
-        "tags": [
-          "User"
-        ],
+        "tags": ["User"],
         "summary": "Get user's data by id",
         "operationId": "getUserById",
         "description": "Returns a specific user with their data",
@@ -291,11 +262,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
+                  "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -325,9 +292,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "User"
-        ],
+        "tags": ["User"],
         "summary": "Update user",
         "operationId": "updateUser",
         "description": "Update one or several user's properties",
@@ -365,7 +330,7 @@
                     "type": "string",
                     "example": "wateRdolphinS1234"
                   },
-                  "userName": {
+                  "name": {
                     "description": "User's name",
                     "type": "string",
                     "example": "Anya Dolphin"
@@ -373,10 +338,7 @@
                   "gender": {
                     "description": "User's gender",
                     "type": "string",
-                    "enum": [
-                      "male",
-                      "female"
-                    ],
+                    "enum": ["male", "female"],
                     "example": "female",
                     "default": "female"
                   },
@@ -403,11 +365,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
+                  "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -449,7 +407,7 @@
       "user": {
         "type": "object",
         "required": [
-          "userName",
+          "name",
           "email",
           "gender",
           "waterRate",
@@ -458,7 +416,7 @@
           "updatedAt"
         ],
         "properties": {
-          "userName": {
+          "name": {
             "description": "User's name",
             "type": "string",
             "example": "Anya Dolphin"
@@ -471,10 +429,7 @@
           "gender": {
             "description": "User's gender",
             "type": "string",
-            "enum": [
-              "male",
-              "female"
-            ],
+            "enum": ["male", "female"],
             "example": "female",
             "default": "female"
           },
@@ -537,10 +492,7 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": [
-                "status",
-                "message"
-              ],
+              "required": ["status", "message"],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -563,10 +515,7 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": [
-                "status",
-                "message"
-              ],
+              "required": ["status", "message"],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -589,10 +538,7 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": [
-                "status",
-                "message"
-              ],
+              "required": ["status", "message"],
               "properties": {
                 "status": {
                   "type": "integer",

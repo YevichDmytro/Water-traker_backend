@@ -5,7 +5,7 @@ import usersRouter from './user.js';
 
 const router = Router();
 
-router.use('/users', usersRouter);
+router.use('/user', usersRouter);
 
 router.use('/auth', authRouter);
 

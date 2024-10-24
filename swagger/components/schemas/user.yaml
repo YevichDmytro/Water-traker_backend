@@ -1,6 +1,6 @@
 type: object
 required:
-  - userName
+  - name
   - email
   - gender
   - waterRate
@@ -8,7 +8,7 @@ required:
   - createdAt
   - updatedAt
 properties:
-  userName:
+  name:
     description: "User's name"
     type: string
     example: Anya Dolphin

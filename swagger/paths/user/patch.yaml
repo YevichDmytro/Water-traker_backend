@@ -28,7 +28,7 @@ requestBody:
             description: "User's password"
             type: string
             example: 'wateRdolphinS1234'
-          userName:
+          name:
             description: "User's name"
             type: string
             example: Anya Dolphin
