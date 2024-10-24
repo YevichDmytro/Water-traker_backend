@@ -10,7 +10,7 @@ properties:
     example: 150
   dateTime:
     type: string
-    description: "The date and time of water consumption. Must me in 'YYYY-MM-DDTHH:mm:ss' format"
+    description: "The date and time of water consumption. Must be in 'YYYY-MM-DDTHH:mm:ss' format"
     format: date-time
     example: '2024-10-23T14:20:00'
   userId:
