@@ -64,11 +64,8 @@ export const deleteWaterController = async (req, res, next) => {
     return;
   }
 
-res.status(204).send();
-
+  res.status(204).send();
 };
-
-
 
 export const getWaterTodayController = async (req, res) => {
   const userId = req.user._id;
@@ -88,9 +85,14 @@ export const getWaterByMonthController = async (req, res) => {
 
   const data = await getWaterByMonthService(userId, month, year);
 
+  const formattedDate = formatDateTime(new Date(year, month - 1));
+
   return res.status(200).json({
     status: 200,
     message: 'Water consumption data per month retrieved successfully!',
-    data: data,
+    data: {
+      date: formattedDate,
+      waterData: data,
+    },
   });
 };
