@@ -1,5 +1,4 @@
 import { ONE_DAY } from '../constants/index.js';
-
 import {
   registerUser,
   loginUser,
@@ -79,4 +78,3 @@ export const refreshUserSessionController = async (req, res) => {
     },
   });
 };
-

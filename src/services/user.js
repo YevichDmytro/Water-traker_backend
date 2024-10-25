@@ -10,9 +10,13 @@ export const getUserService = async (userId) => {
     name: user.name,
     email: user.email,
     gender: user.gender,
-    waterRate: user.waterRate,
     photo: user.photo,
   };
+};
+
+export const getWaterRateService = async (userId) => {
+  const user = await User.findById({ _id: userId });
+  return { waterRate: user.waterRate };
 };
 
 export const updateUserService = async (id, changed) => {
@@ -24,8 +28,24 @@ export const updateUserService = async (id, changed) => {
 
   if (!user || !user.value) return null;
 
+  const { email, gender, name } = user.value;
   return {
-    user: user.value,
+    user: { email, gender, name },
     isNew: Boolean(user?.lastErrorObject?.upserted),
+  };
+};
+
+export const updateAvatarService = async (id, avatar) => {
+  const userAvatar = await User.findByIdAndUpdate({ _id: id }, avatar, {
+    new: true,
+    includeResultMetadata: true,
+    runValidators: true,
+  });
+
+  if (!userAvatar || !userAvatar.value) return null;
+
+  return {
+    user: userAvatar.value,
+    isNew: Boolean(userAvatar?.lastErrorObject?.upserted),
   };
 };

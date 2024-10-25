@@ -7,7 +7,7 @@ export const updateUserSchema = Joi.object({
   password: Joi.string().messages({
     'string.base': 'Password must be a string.',
   }),
-  userName: Joi.string().min(3).max(30).messages({
+  name: Joi.string().min(3).max(30).messages({
     'string.base': 'Username should be a string.',
     'string.min': 'Username should be at least {#limit} characters.',
     'string.max': 'Username should be at most {#limit} characters.',
@@ -21,8 +21,19 @@ export const updateUserSchema = Joi.object({
     'number.min': 'Water rate cannot be less than {#limit}.',
     'number.max': 'Water rate cannot exceed {#limit}.',
   }),
+});
+
+export const updateAvatarSchema = Joi.object({
   photo: Joi.string().uri().messages({
     'string.base': 'Photo must be a string.',
     'string.uri': 'Photo must be a valid URI.',
+  }),
+});
+
+export const waterRateSchema = Joi.object({
+  waterRate: Joi.number().min(0).max(15000).messages({
+    'number.base': 'Water rate must be a number.',
+    'number.min': 'Water rate cannot be less than {#limit}.',
+    'number.max': 'Water rate cannot exceed {#limit}.',
   }),
 });

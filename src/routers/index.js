@@ -6,7 +6,7 @@ import waterRouter from './water.js';
 
 const router = Router();
 
-router.use('/users', usersRouter);
+router.use('/user', usersRouter);
 
 router.use('/auth', authRouter);
 
