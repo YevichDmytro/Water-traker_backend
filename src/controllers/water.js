@@ -8,6 +8,7 @@ import {
   getWaterByMonthService,
 } from '../services/water.js';
 import formatDateTime from '../utils/formatDate.js';
+import formatMonth from '../utils/formatDateTime.js';
 
 export const createWaterController = async (req, res, next) => {
   const { value, dateTime } = req.body;
@@ -85,13 +86,11 @@ export const getWaterByMonthController = async (req, res) => {
 
   const data = await getWaterByMonthService(userId, month, year);
 
-  const formattedDate = formatDateTime(new Date(year, month - 1));
-
   return res.status(200).json({
     status: 200,
     message: 'Water consumption data per month retrieved successfully!',
     data: {
-      date: formattedDate,
+      date: formatMonth(date),
       waterData: data,
     },
   });
