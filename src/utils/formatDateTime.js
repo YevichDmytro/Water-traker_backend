@@ -1,7 +1,8 @@
-const formatDateTime = (date) => {
-  const year = date.getFullYear();
-  const month = date.toLocaleString('en-US', { month: 'long' });
-  return `${month}, ${year}`;
+const formatMonth = (monthYear) => {
+  const [month, year] = monthYear.split('-').map(Number);
+  const date = new Date(year, month - 1);
+  const formattedMonth = date.toLocaleString('en-US', { month: 'long' });
+  return `${formattedMonth}, ${year}`;
 };
 
-export default formatDateTime;
+export default formatMonth;
