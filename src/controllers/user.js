@@ -3,7 +3,9 @@ import createHttpError from 'http-errors';
 import {
   getAllUsersService,
   getUserService,
+  getWaterRateService,
   updateUserService,
+  updateAvatarService,
 } from '../services/user.js';
 import { env } from '../utils/env.js';
 import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
@@ -26,12 +28,46 @@ export const getUserController = async (req, res, next) => {
 
   res.send({
     status: 200,
-    message: `User with id:${userId} successfully found`,
+    message: `User successfully found`,
     data: userById,
   });
 };
 
+export const getWaterRateController = async (req, res, next) => {
+  const userId = req.user._id;
+
+  const userById = await getWaterRateService(userId);
+
+  if (userById === null) {
+    return next(createHttpError.NotFound('User not found'));
+  }
+
+  res.send({
+    status: 200,
+    message: `User's ${userById.name} WaterRate!`,
+    data: userById.waterRate,
+  });
+};
+
 export const updateUserController = async (req, res, next) => {
+  const userId = req.user._id;
+
+  const update = await updateUserService(userId, {
+    ...req.body,
+  });
+
+  if (!update) {
+    throw createHttpError(404, 'User not found');
+  }
+
+  res.status(200).json({
+    status: 200,
+    message: 'Successfully patched a User!',
+    data: update.user,
+  });
+};
+
+export const updateAvatarController = async (req, res, next) => {
   const userId = req.user._id;
 
   const photo = req.file;
@@ -46,8 +82,7 @@ export const updateUserController = async (req, res, next) => {
     }
   }
 
-  const update = await updateUserService(userId, {
-    ...req.body,
+  const update = await updateAvatarService(userId, {
     photo: photoUrl,
   });
 
@@ -58,6 +93,6 @@ export const updateUserController = async (req, res, next) => {
   res.status(200).json({
     status: 200,
     message: 'Successfully patched a User!',
-    data: update.user,
+    data: update.user.photo,
   });
 };
