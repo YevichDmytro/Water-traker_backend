@@ -14,7 +14,7 @@ export const registerUserController = async (req, res) => {
     status: 201,
     message: 'Successfully registered a user!',
     data: user,
-    redirectUrl: '/welcome',
+    redirectUrl: '/home',
   });
 };
 
