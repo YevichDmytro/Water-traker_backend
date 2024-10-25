@@ -4,8 +4,6 @@ import {
   createWaterController,
   editWaterController,
   deleteWaterController,
-  getWaterByDateController,
-  getAllWaterController,
   getWaterByMonthController,
   getWaterTodayController,
 } from '../controllers/water.js';
@@ -18,7 +16,6 @@ import {
   createWaterSchema,
   updateWaterSchema,
   monthSchema,
-  dateSchema,
 } from '../validations/water.js';
 
 const waterRouter = Router();
@@ -40,15 +37,7 @@ waterRouter.patch(
 
 waterRouter.delete('/:id', isValidId, ctrlWrapper(deleteWaterController));
 
-waterRouter.get('/', ctrlWrapper(getAllWaterController));
-
-waterRouter.get('/day', ctrlWrapper(getWaterTodayController));
-
-waterRouter.get(
-  '/day/:date',
-  validateParams(dateSchema),
-  ctrlWrapper(getWaterByDateController),
-);
+waterRouter.get('/today', ctrlWrapper(getWaterTodayController));
 
 waterRouter.get(
   '/month/:date',

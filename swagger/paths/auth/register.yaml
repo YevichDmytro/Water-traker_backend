@@ -11,21 +11,17 @@ requestBody:
       schema:
         type: object
         properties:
-          userName:
-            description: "User's name"
-            type: string
-            example: Anya Dolphin
           email:
-            description: "User's email"
+            description: "User's email. Must be a valid email"
             type: string
-            pattern: '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
-            example: dolphinslovewater@gmail.com
+            example: waterexample@gmail.com
           password:
-            description: "User's password"
+            description: "User's password. The password must contain between 8 and 64 characters"
             type: string
-            example: 'wateRdolphinS1234'
+            example: 'Water1234'
+            minLength: 8
+            maxLength: 64
         required:
-          - userName
           - email
           - password
 responses:
@@ -44,6 +40,8 @@ responses:
               example: Successfully registered a user!
             data:
               $ref: ../../components/schemas/user.yaml
+  '400':
+    $ref: ../../components/responses/400.yaml
   '409':
     $ref: ../../components/responses/409.yaml
   '500':

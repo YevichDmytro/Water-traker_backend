@@ -16,7 +16,7 @@ requestBody:
             example: dolphinslovewater@gmail.com
           password:
             type: string
-            example: 'wateRdolphinS1234'
+            example: 'Water1234'
         required:
           - email
           - password
@@ -56,7 +56,7 @@ responses:
                     - gender
                     - waterRate
                   properties:
-                    userName:
+                    name:
                       description: User's name
                       type: string
                       example: Anya Dolphin

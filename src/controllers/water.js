@@ -4,12 +4,11 @@ import {
   addWaterDataService,
   editWaterService,
   deleteWaterService,
-  getAllRecords,
   getWaterTodayService,
   getWaterByMonthService,
-  getWaterByDateService,
 } from '../services/water.js';
 import formatDateTime from '../utils/formatDate.js';
+import formatMonth from '../utils/formatDateTime.js';
 
 export const createWaterController = async (req, res, next) => {
   const { value, dateTime } = req.body;
@@ -44,13 +43,13 @@ export const editWaterController = async (req, res, next) => {
   });
 
   if (!result) {
-    next(createHttpError(404, 'Contact not found'));
+    next(createHttpError(404, 'Record not found'));
     return;
   }
 
   res.json({
     status: 200,
-    message: 'Successfully patched a contact!',
+    message: 'Successfully patched water record!',
     data: result,
   });
 };
@@ -62,49 +61,20 @@ export const deleteWaterController = async (req, res, next) => {
   const waterToDelete = await deleteWaterService(id, userId);
 
   if (!waterToDelete) {
-    next(createHttpError(404, 'Contact not found'));
+    next(createHttpError(404, 'Record not found'));
     return;
   }
 
-  res.status(200).send({ status: 200, data: { id } });
-};
-
-export const getAllWaterController = async (req, res) => {
-  const waterRecords = await getAllRecords({
-    userId: req.user._id,
-  });
-
-  res.status(200).json({
-    status: 200,
-    message: 'Successfully found contacts!',
-    data: waterRecords,
-  });
+  res.status(204).send();
 };
 
 export const getWaterTodayController = async (req, res) => {
-  const userId = req.user.id;
+  const userId = req.user._id;
 
   const waterData = await getWaterTodayService(userId);
   res.status(200).json({
     success: true,
     data: waterData,
-  });
-};
-
-export const getWaterByDateController = async (req, res, next) => {
-  const { date } = req.params;
-  const userId = req.user._id;
-
-  const waterByDate = await getWaterByDateService(userId, date);
-
-  if (!waterByDate) {
-    return next(createHttpError.NotFound(`Water not found by date ${date}`));
-  }
-
-  res.status(200).json({
-    status: 200,
-    message: 'Water by date found successfully',
-    date: waterByDate,
   });
 };
 
@@ -119,6 +89,9 @@ export const getWaterByMonthController = async (req, res) => {
   return res.status(200).json({
     status: 200,
     message: 'Water consumption data per month retrieved successfully!',
-    data: data,
+    data: {
+      date: formatMonth(date),
+      waterData: data,
+    },
   });
 };

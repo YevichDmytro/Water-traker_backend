@@ -5,14 +5,6 @@ operationId: updateUser
 description: "Update one or several user's properties"
 security:
   - bearerAuth: []
-parameters:
-  - in: path
-    name: id
-    required: true
-    schema:
-      type: string
-      example: '65ca67e7ae7f10c88b598384'
-    description: 'The ID of the user to update'
 requestBody:
   content:
     multipart/form-data:
@@ -22,13 +14,12 @@ requestBody:
           email:
             description: "User's email"
             type: string
-            pattern: '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
-            example: dolphinslovewater@gmail.com
+            example: waterexample@gmail.com
           password:
             description: "User's password"
             type: string
-            example: 'wateRdolphinS1234'
-          userName:
+            example: 'Water1234'
+          name:
             description: "User's name"
             type: string
             example: Anya Dolphin
@@ -68,7 +59,7 @@ responses:
             message:
               type: string
               description: A message of a successful info update
-              example: Successfully updated a user!
+              example: Successfully patched a user!
             data:
               type: object
               $ref: '../../components/schemas/user.yaml'

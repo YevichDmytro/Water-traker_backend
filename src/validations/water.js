@@ -5,10 +5,16 @@ export const createWaterSchema = Joi.object({
     'number.base': 'Value must be a number',
     'any.required': 'Value is required ',
   }),
-  dateTime: Joi.string().messages({
-    'string.base': 'dateTime must be a string in foramt YYYY-MM-DDTHH:mm:ss',
-    'any.required': 'dateTime is required ',
-  }),
+  dateTime: Joi.string()
+    .pattern(/^\d{2}-\d{2}-\d{4} \d{2}:\d{2}:\d{2}$/)
+    .required()
+    .messages({
+      'string.base': 'dateTime must be a string',
+      'string.pattern.base':
+        'dateTime must be in the format DD-MM-YYYY HH:mm:ss',
+      'any.required': 'dateTime is required',
+    }),
+ 
 });
 
 export const updateWaterSchema = Joi.object({
@@ -16,21 +22,18 @@ export const updateWaterSchema = Joi.object({
     'number.base': 'Value must be a number',
     'any.required': 'Value is required ',
   }),
-  dateTime: Joi.string().messages({
-    'string.base': 'dateTime must be a string in foramt YYYY-MM-DDTHH:mm:ss',
-    'any.required': 'dateTime is required ',
-  }),
-});
-
-export const dateSchema = Joi.object({
-  date: Joi.string()
-    .pattern(/^\d{2}-\d{2}-\d{4}$/)
+  dateTime: Joi.string()
+    .pattern(/^\d{2}-\d{2}-\d{4} \d{2}:\d{2}:\d{2}$/)
     .required()
     .messages({
-      'string.pattern.base': 'Date must be in the format MM-YYYY',
-      'any.required': 'Date is required',
+      'string.base': 'dateTime must be a string',
+      'string.pattern.base':
+        'dateTime must be in the format DD-MM-YYYY HH:mm:ss',
+      'any.required': 'dateTime is required',
     }),
+
 });
+
 
 export const monthSchema = Joi.object({
   date: Joi.string()
