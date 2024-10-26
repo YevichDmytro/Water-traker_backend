@@ -12,7 +12,6 @@ const userSchema = new Schema(
     },
     name: {
       type: String,
-      required: true,
     },
     gender: {
       type: String,
@@ -32,6 +31,11 @@ const userSchema = new Schema(
     versionKey: false,
   },
 );
+userSchema.methods.toJSON = function () {
+  const obj = this.toObject();
+  delete obj.password;
+  return obj;
+};
 
-const UsersCollection = model('students', userSchema);
+const UsersCollection = model('users', userSchema);
 export default UsersCollection;

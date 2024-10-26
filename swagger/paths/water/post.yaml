@@ -1,0 +1,35 @@
+tags:
+  - Water
+summary: Add water consumption record
+operationId: addWaterData
+description: Add a new water consumption record with entries
+security:
+  - bearerAuth: []
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        $ref: ../../components/schemas/waterInput.yaml
+responses:
+  '201':
+    description: Water record created successfully
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              description: HTTP status code indicating that the record was successfully created
+              example: 201
+            message:
+              type: string
+              description: A message confirming the successful creation of the water consumption record
+              example: Water record created successfully!
+            data:
+              $ref: ../../components/schemas/waterRecord.yaml
+  '400':
+    $ref: '../../components/responses/400.yaml'
+  '500':
+    $ref: ../../components/responses/500.yaml

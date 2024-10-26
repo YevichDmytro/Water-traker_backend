@@ -1,0 +1,1109 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Water tracker app",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "description": "This is a documentation of a water tracker app"
+  },
+  "servers": [
+    {
+      "url": "https://browser-battalion-3-0-backend-kyxl.onrender.com"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Authentication and authorisation operations"
+    },
+    {
+      "name": "User",
+      "description": "Operations with user data"
+    },
+    {
+      "name": "Water",
+      "description": "Documenting consumed water"
+    }
+  ],
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Register a new user",
+        "operationId": "registerUser",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "description": "User's email. Must be a valid email",
+                    "type": "string",
+                    "example": "waterexample@gmail.com"
+                  },
+                  "password": {
+                    "description": "User's password. The password must contain between 8 and 64 characters",
+                    "type": "string",
+                    "example": "Water1234",
+                    "minLength": 8,
+                    "maxLength": 64
+                  }
+                },
+                "required": [
+                  "email",
+                  "password"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User successfully registered",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully registered a user!"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/user"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "409": {
+            "$ref": "#/components/responses/409"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Login a user",
+        "operationId": "loginUser",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "description": "User's email. Must be a valid email",
+                    "type": "string",
+                    "example": "waterexample@gmail.com"
+                  },
+                  "password": {
+                    "description": "User's password. The password must contain between 8 and 64 characters",
+                    "type": "string",
+                    "example": "Water1234",
+                    "minLength": 8,
+                    "maxLength": 64
+                  }
+                },
+                "required": [
+                  "email",
+                  "password"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User successfully logged in",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code of a successful operation",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully logged in a user!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "accessToken",
+                        "user"
+                      ],
+                      "properties": {
+                        "accessToken": {
+                          "type": "string",
+                          "description": "User's JWT token",
+                          "example": "juUjAYnHkvvBc2NxzLQeEWyEi85SeP87jpMi/CKF"
+                        },
+                        "user": {
+                          "type": "object",
+                          "required": [
+                            "email",
+                            "gender",
+                            "waterRate"
+                          ],
+                          "properties": {
+                            "name": {
+                              "description": "User's name",
+                              "type": "string",
+                              "example": "Anya Dolphin"
+                            },
+                            "email": {
+                              "type": "string",
+                              "description": "User's email address",
+                              "example": "dolphinslovewater@gmail.com"
+                            },
+                            "gender": {
+                              "type": "string",
+                              "description": "User's gender",
+                              "enum": [
+                                "male",
+                                "female"
+                              ],
+                              "default": "female",
+                              "example": "female"
+                            },
+                            "waterRate": {
+                              "type": "number",
+                              "description": "User's water rate",
+                              "example": 50
+                            },
+                            "photo": {
+                              "type": "string",
+                              "description": "User's profile picture",
+                              "example": "https://res.cloudinary.com/dpm5rrtxp/image/upload/v1728788643/photos/m3hzyhdgjx1nskvrirpv.jpg"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Logout a user",
+        "operationId": "logoutUser",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "User has been logged out; no content returned"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/user/userById": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get user's data by id",
+        "operationId": "getUserById",
+        "description": "Returns a specific user with their data",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The requested user and their data was found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code of a successful operation",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A message informing that the user with the requested id was successfully found in the system",
+                      "example": "Successfully found current user!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/user"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/user/update": {
+      "patch": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Update user",
+        "operationId": "updateUser",
+        "description": "Update one or several user's properties",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "description": "User's email",
+                    "type": "string",
+                    "example": "waterexample@gmail.com"
+                  },
+                  "password": {
+                    "description": "User's password",
+                    "type": "string",
+                    "example": "Water1234"
+                  },
+                  "name": {
+                    "description": "User's name",
+                    "type": "string",
+                    "example": "Anya Dolphin"
+                  },
+                  "gender": {
+                    "description": "User's gender",
+                    "type": "string",
+                    "enum": [
+                      "male",
+                      "female"
+                    ],
+                    "example": "female",
+                    "default": "female"
+                  },
+                  "waterRate": {
+                    "description": "User's water rate",
+                    "type": "number",
+                    "example": 50
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The user's info has been updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code of a successful operation",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A message of a successful info update",
+                      "example": "Successfully patched a user!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/user"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "409": {
+            "$ref": "#/components/responses/409"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/user/avatar": {
+      "patch": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Update user avatar",
+        "operationId": "updateAvatar",
+        "description": "Update the user's avatar by uploading a photo file",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "photo": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "The new avatar photo file to upload"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User avatar updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code indicating the avatar was successfully updated",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Confirmation message that the avatar was successfully updated",
+                      "example": "Successfully patched a User!"
+                    },
+                    "data": {
+                      "type": "string",
+                      "description": "The URL of the user's updated avatar",
+                      "example": "https://res.cloudinary.com/dpm5rrtxp/image/upload/v1728788643/photos/m3hzyhdgjx1nskvrirpv.jpg"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/user/waterRate": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get user's daily water rate",
+        "operationId": "getWaterRate",
+        "description": "Retrieve the daily water consumption rate for the user",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User's water rate found successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code indicating the water rate was successfully found",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Message confirmation that the water rate record was successfully found",
+                      "example": "User's Anya WaterRate!"
+                    },
+                    "data": {
+                      "type": "number",
+                      "description": "The user's daily water consumption rate in milliliters",
+                      "example": 1700
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/water": {
+      "post": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Add water consumption record",
+        "operationId": "addWaterData",
+        "description": "Add a new water consumption record with entries",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/waterInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Water record created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code indicating that the record was successfully created",
+                      "example": 201
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A message confirming the successful creation of the water consumption record",
+                      "example": "Water record created successfully!"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/waterRecord"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/water/{id}": {
+      "patch": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Edit water consumption record",
+        "operationId": "editData",
+        "description": "Update an existing water consumption record by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Id of the water consumption record to update",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "60b2f76d422221c0b0f394a1"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/waterInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Water record updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code indicating the record was successfully updated",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A message confirming the successful update of the water consumption record",
+                      "example": "Water record updated successfully!"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/waterRecord"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Delete water consumption record",
+        "operationId": "deleteWater",
+        "description": "Delete an existing water consumption record by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "The id of the water consumption record to delete",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "60b2f76d422221c0b0f394a1"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Water consumption record deleted successfully. No content returned."
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/water/today": {
+      "get": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Get today's water consumption",
+        "operationId": "getWaterToday",
+        "description": "Retrieve the water consumption records for the current day for the logged-in user.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Water consumption data for today retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Indicates if the operation was successful",
+                      "example": true
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "totalWater": {
+                          "type": "number",
+                          "description": "Total amount of water consumed today in milliliters",
+                          "example": 1500
+                        },
+                        "dailyNorma": {
+                          "type": "string",
+                          "description": "User's daily water intake goal in liters",
+                          "example": "2.0 L"
+                        },
+                        "goalPercentage": {
+                          "type": "number",
+                          "description": "Percentage of daily goal achieved",
+                          "example": 75
+                        },
+                        "records": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/waterRecord"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/water/month/{date}": {
+      "get": {
+        "tags": [
+          "Water"
+        ],
+        "summary": "Get water consumption records by month",
+        "operationId": "getWaterByMonth",
+        "description": "Return water consumption records for a specific month and year",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "date",
+            "description": "The month and year for which to retrieve water consumption records in 'MM-YYYY' format",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "10-2024"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Water records found for the specific month",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "description": "HTTP status code indicating the records were successfully found",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Confirmation message that records were found",
+                      "example": "Water consumption data per month found successfully!"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "date": {
+                            "type": "string",
+                            "description": "The specific date for the record in format: 'number, month'",
+                            "example": "24, October"
+                          },
+                          "dailyNorma": {
+                            "type": "string",
+                            "description": "The user's daily water consumption goal in liters",
+                            "example": "1.5 L"
+                          },
+                          "goalPercentage": {
+                            "type": "number",
+                            "description": "Percentage of the daily water goal consumed",
+                            "example": 80
+                          },
+                          "consumptionCount": {
+                            "type": "integer",
+                            "description": "The number of consumption records for that date",
+                            "example": 6
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "user": {
+        "type": "object",
+        "required": [
+          "name",
+          "email",
+          "gender",
+          "waterRate",
+          "createdAt",
+          "updatedAt"
+        ],
+        "properties": {
+          "name": {
+            "description": "User's name",
+            "type": "string",
+            "example": "Anya Dolphin"
+          },
+          "email": {
+            "description": "User's email",
+            "type": "string",
+            "example": "waterexample@gmail.com"
+          },
+          "gender": {
+            "description": "User's gender",
+            "type": "string",
+            "enum": [
+              "male",
+              "female"
+            ],
+            "example": "female",
+            "default": "female"
+          },
+          "waterRate": {
+            "description": "User's water rate",
+            "type": "number",
+            "example": 50
+          },
+          "photo": {
+            "description": "User's profile picture",
+            "type": "string",
+            "example": "https://res.cloudinary.com/dpm5rrtxp/image/upload/v1728788643/photos/m3hzyhdgjx1nskvrirpv.jpg"
+          }
+        }
+      },
+      "waterInput": {
+        "type": "object",
+        "required": [
+          "value",
+          "dateTime"
+        ],
+        "properties": {
+          "value": {
+            "type": "number",
+            "description": "The amount of water consumed, in milliliters (must be between 50 and 5000).",
+            "minimum": 50,
+            "maximum": 5000,
+            "example": 150
+          },
+          "dateTime": {
+            "type": "string",
+            "description": "The date and time of water consumption. Must be in 'DD-MM-YYYY HH:mm:ss' format",
+            "format": "date-time",
+            "example": "23-10-2024 14:20:00"
+          }
+        }
+      },
+      "waterRecord": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Id of a particular water consumption record",
+            "example": "60b2f76d422221c0b0f394a1"
+          },
+          "value": {
+            "type": "number",
+            "description": "Amount of a one-time water consumption in milliliters",
+            "example": 150
+          },
+          "dateTime": {
+            "type": "string",
+            "description": "The date and time of water consumption. Must be in 'DD-MM-YYYY HH:mm:ss' format",
+            "format": "date-time",
+            "example": "23-10-2024 14:20:00"
+          },
+          "userId": {
+            "type": "string",
+            "description": "ID of the user who created the water record",
+            "example": "60b2f76d422221c0b0f394b"
+          }
+        }
+      }
+    },
+    "responses": {
+      "400": {
+        "description": "Invalid input data; required fields are missing, invalid date format",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "description": "HTTP status code of the error",
+                  "example": 400
+                },
+                "message": {
+                  "type": "string",
+                  "description": "Error message indicating that the provided email, password length or date format is invalid or a required field is missing",
+                  "example": "Invalid email format or password length."
+                }
+              }
+            }
+          }
+        }
+      },
+      "401": {
+        "description": "Unauthorized: Invalid or missing token; Wrong email or password.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "description": "HTTP status code indicating an authorisation error",
+                  "example": 401
+                },
+                "message": {
+                  "type": "string",
+                  "description": "A message disclosing the authorisation error occurred",
+                  "example": "Unauthorised"
+                }
+              }
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "User / water record(s) not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "description": "HTTP status code indicating the user or the water record(s) was not found in the system",
+                  "example": 404
+                },
+                "message": {
+                  "type": "string",
+                  "description": "A message disclosing that no user or water record or records matches the provided credentials or parameters",
+                  "example": "User not found"
+                }
+              }
+            }
+          }
+        }
+      },
+      "409": {
+        "description": "Email already in use",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "description": "HTTP status code indicating a conflict due to duplicating data",
+                  "example": 409
+                },
+                "message": {
+                  "type": "string",
+                  "description": "A message specifying the conflict of duplication",
+                  "example": "Email in use"
+                }
+              }
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Internal Server Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "description": "HTTP status code indicating a server error",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "description": "A message indicating something went wrong on the server",
+                  "example": "Internal Server Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

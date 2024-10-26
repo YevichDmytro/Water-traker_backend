@@ -1,0 +1,17 @@
+description: Email already in use
+content:
+  application/json:
+    schema:
+      type: object
+      required:
+        - status
+        - message
+      properties:
+        status:
+          type: integer
+          description: HTTP status code indicating a conflict due to duplicating data
+          example: 409
+        message:
+          type: string
+          description: A message specifying the conflict of duplication
+          example: 'Email in use'
