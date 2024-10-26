@@ -18,7 +18,7 @@ requestBody:
   content:
     application/json:
       schema:
-        $ref: ../../../components/schemas/waterRecordRequest.yaml
+        $ref: ../../../components/schemas/waterInput.yaml
 responses:
   '200':
     description: Water record updated successfully
@@ -36,7 +36,7 @@ responses:
               description: A message confirming the successful update of the water consumption record
               example: Water record updated successfully!
             data:
-              $ref: '../../../components/schemas/waterDbRecord.yaml'
+              $ref: '../../../components/schemas/waterRecord.yaml'
   '400':
     $ref: '../../../components/responses/400.yaml'
   '404':

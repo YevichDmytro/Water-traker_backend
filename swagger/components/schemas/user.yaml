@@ -31,13 +31,3 @@ properties:
     description: "User's profile picture"
     type: string
     example: 'https://res.cloudinary.com/dpm5rrtxp/image/upload/v1728788643/photos/m3hzyhdgjx1nskvrirpv.jpg'
-  createdAt:
-    description: 'User account creation date'
-    type: string
-    format: date-time
-    example: '2023-10-18T12:34:56Z'
-  updatedAt:
-    description: 'User account update date'
-    type: string
-    format: date-time
-    example: '2023-10-18T12:34:56Z'

@@ -1,9 +1,0 @@
-# tags:
-#   - Water
-# summary: Get all water consumption records
-# operationId: getAllRecords
-# description: Get all water consumption records of a logged in user
-# security:
-#   - bearerAuth: []
-
-#   response: 'Successfully found water records!'
