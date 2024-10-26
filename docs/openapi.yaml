@@ -8,7 +8,7 @@ info:
   description: This is a documentation of a water tracker app
 tags:
   - name: Auth
-    description: Authentication and authorisation operations
+    description: Authentication and authorization operations
   - name: User
     description: Operations with user data
   - name: Water
