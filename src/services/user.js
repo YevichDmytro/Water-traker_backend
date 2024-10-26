@@ -34,23 +34,25 @@ export const updateUserService = async (userData, changed) => {
     }
   }
 
-  const isEqual = await bcrypt.compare(changed.outdatedPassword, password);
-
-  if (!isEqual) {
-    throw createHttpError(401, 'Invalid password');
+  if (changed.outdatedPassword && !changed.password) {
+    throw createHttpError(400, 'New password is missing!');
   }
 
-  const encryptedPassword = await bcrypt.hash(changed.password, 10);
+  if (changed.password && changed.outdatedPassword) {
+    const isEqual = await bcrypt.compare(changed.outdatedPassword, password);
 
-  const user = await User.findByIdAndUpdate(
-    { _id: _id },
-    { ...changed, password: encryptedPassword },
-    {
-      new: true,
-      includeResultMetadata: true,
-      runValidators: true,
-    },
-  );
+    if (!isEqual) {
+      throw createHttpError(401, 'Invalid password');
+    }
+
+    changed.password = await bcrypt.hash(changed.password, 10);
+  }
+
+  const user = await User.findByIdAndUpdate({ _id: _id }, changed, {
+    new: true,
+    includeResultMetadata: true,
+    runValidators: true,
+  });
 
   if (!user || !user.value) return null;
 
