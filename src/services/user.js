@@ -40,7 +40,7 @@ export const updateUserService = async (userData, changed) => {
     throw createHttpError(401, 'Invalid password');
   }
 
-  const encryptedPassword = await bcrypt.hash(changed.outdatedPassword, 10);
+  const encryptedPassword = await bcrypt.hash(changed.password, 10);
 
   const user = await User.findByIdAndUpdate(
     { _id: _id },
