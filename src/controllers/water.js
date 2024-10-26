@@ -8,7 +8,7 @@ import {
   getWaterByMonthService,
 } from '../services/water.js';
 import formatDateTime from '../utils/formatDate.js';
-import formatMonth from '../utils/formatDateTime.js';
+import { formatMonth } from '../utils/formatDateTime.js';
 
 export const createWaterController = async (req, res, next) => {
   const { value, dateTime } = req.body;
