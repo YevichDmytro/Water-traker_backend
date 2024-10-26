@@ -56,6 +56,7 @@ export const updateUserController = async (req, res, next) => {
     ...req.body,
   });
 
+
   if (!update) {
     throw createHttpError(404, 'User not found');
   }
