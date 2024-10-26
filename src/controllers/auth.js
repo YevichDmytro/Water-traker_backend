@@ -7,14 +7,31 @@ import {
 } from '../services/auth.js';
 
 export const registerUserController = async (req, res) => {
-  const user = await registerUser(req.body);
+  try {
+    const data = await registerUser(req.body);
 
-  res.status(201).json({
-    status: 201,
-    message: 'Successfully registered a user!',
-    data: user,
-    redirectUrl: '/home',
-  });
+    res.cookie('refreshToken', data.session.refreshToken, {
+      httpOnly: true,
+      expires: new Date(Date.now() + ONE_DAY),
+    });
+    res.cookie('sessionId', data.session._id, {
+      httpOnly: true,
+      expires: new Date(Date.now() + ONE_DAY),
+    });
+
+    res.status(201).json({
+      status: 201,
+      message: 'Successfully registered and logged in!',
+      data: {
+        accessToken: data.session.accessToken,
+        user: data.user,
+      },
+    });
+  } catch (error) {
+    res.status(error.status || 500).json({
+      message: error.message,
+    });
+  }
 };
 
 export const loginUserController = async (req, res) => {
