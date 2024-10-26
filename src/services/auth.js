@@ -13,10 +13,18 @@ export const registerUser = async (payload) => {
 
   const encryptedPassword = await bcrypt.hash(payload.password, 10);
 
-  return await UsersCollection.create({
+  const newUser = await UsersCollection.create({
     ...payload,
     password: encryptedPassword,
   });
+
+  return {
+    name: newUser.name,
+    email: newUser.email,
+    gender: newUser.gender,
+    waterRate: newUser.waterRate,
+    photo: newUser.photo,
+  };
 };
 
 export const loginUser = async (payload) => {

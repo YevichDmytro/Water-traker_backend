@@ -50,9 +50,9 @@ export const getWaterRateController = async (req, res, next) => {
 };
 
 export const updateUserController = async (req, res, next) => {
-  const userId = req.user._id;
+  const user = req.user;
 
-  const update = await updateUserService(userId, {
+  const update = await updateUserService(user, {
     ...req.body,
   });
 
