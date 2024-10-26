@@ -52,8 +52,6 @@ export const updateUserService = async (userData, changed) => {
     },
   );
 
-  console.log(user);
-
   if (!user || !user.value) return null;
 
   const { email, gender, name } = user.value;
