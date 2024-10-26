@@ -10,7 +10,7 @@ requestBody:
   content:
     application/json:
       schema:
-        $ref: ../../components/schemas/waterRecordRequest.yaml
+        $ref: ../../components/schemas/waterInput.yaml
 responses:
   '201':
     description: Water record created successfully
@@ -28,7 +28,7 @@ responses:
               description: A message confirming the successful creation of the water consumption record
               example: Water record created successfully!
             data:
-              $ref: ../../components/schemas/waterDbRecord.yaml
+              $ref: ../../components/schemas/waterRecord.yaml
   '400':
     $ref: '../../components/responses/400.yaml'
   '500':

@@ -1,0 +1,44 @@
+tags:
+  - Water
+summary: Get today's water consumption
+operationId: getWaterToday
+description: Retrieve the water consumption records for the current day for the logged-in user.
+security:
+  - bearerAuth: []
+responses:
+  '200':
+    description: Water consumption data for today retrieved successfully
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            success:
+              type: boolean
+              description: Indicates if the operation was successful
+              example: true
+            data:
+              type: object
+              properties:
+                totalWater:
+                  type: number
+                  description: Total amount of water consumed today in milliliters
+                  example: 1500
+                dailyNorma:
+                  type: string
+                  description: User's daily water intake goal in liters
+                  example: '2.0 L'
+                goalPercentage:
+                  type: number
+                  description: Percentage of daily goal achieved
+                  example: 75
+                records:
+                  type: array
+                  items:
+                    $ref: '../../../components/schemas/waterRecord.yaml'
+  '400':
+    $ref: '../../../components/responses/400.yaml'
+  '404':
+    $ref: '../../../components/responses/404.yaml'
+  '500':
+    $ref: '../../../components/responses/500.yaml'

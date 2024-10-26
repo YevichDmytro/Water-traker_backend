@@ -35,11 +35,6 @@ requestBody:
             description: "User's water rate"
             type: number
             example: 50
-          photo:
-            description: "User's profile picture"
-            type: string
-            format: binary
-            example: 'https://res.cloudinary.com/dpm5rrtxp/image/upload/v1728788643/photos/m3hzyhdgjx1nskvrirpv.jpg'
 responses:
   '200':
     description: The user's info has been updated
@@ -63,6 +58,12 @@ responses:
             data:
               type: object
               $ref: '../../components/schemas/user.yaml'
+  '400':
+    $ref: ../../components/responses/400.yaml
+  '401':
+    $ref: '../../components/responses/401.yaml'
+  '409':
+    $ref: ../../components/responses/409.yaml
   '404':
     $ref: '../../components/responses/404.yaml'
   '500':
