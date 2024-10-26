@@ -13,8 +13,11 @@ export const registerUser = async (payload) => {
 
   const encryptedPassword = await bcrypt.hash(payload.password, 10);
 
+  const nameFromEmail = payload.email.split('@')[0];
+
   const newUser = await UsersCollection.create({
     ...payload,
+    name: nameFromEmail,
     password: encryptedPassword,
   });
 
