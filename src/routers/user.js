@@ -3,9 +3,9 @@ import { Router } from 'express';
 import {
   getAllUsersController,
   getUserController,
-  getWaterRateController,
   updateUserController,
   updateAvatarController,
+  updateWaterRateController,
 } from '../controllers/user.js';
 import { authenticate } from '../middlewares/authenticate.js';
 import isValidId from '../middlewares/isValidId.js';
@@ -22,7 +22,7 @@ router.get('/', ctrlWrapper(getAllUsersController));
 
 router.get('/userById', isValidId, ctrlWrapper(getUserController));
 
-router.get('/waterRate', isValidId, ctrlWrapper(getWaterRateController));
+router.patch('/waterRate', isValidId, ctrlWrapper(updateWaterRateController));
 
 router.patch(
   '/update',

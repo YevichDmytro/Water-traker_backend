@@ -13,6 +13,7 @@ export const getUserService = async (userId) => {
     name: user.name,
     email: user.email,
     gender: user.gender,
+    waterRate: user.waterRate,
     photo: user.photo,
   };
 };
@@ -77,4 +78,16 @@ export const updateAvatarService = async (id, avatar) => {
     user: userAvatar.value,
     isNew: Boolean(userAvatar?.lastErrorObject?.upserted),
   };
+};
+
+export const updateWaterRateService = async (id, waterRate) => {
+  const user = await User.findByIdAndUpdate(id, waterRate, {
+    new: true,
+    includeResultMetadata: true,
+    runValidators: true,
+  });
+
+  if (!user) return null;
+
+  return user;
 };
