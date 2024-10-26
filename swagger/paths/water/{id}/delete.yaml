@@ -14,24 +14,8 @@ parameters:
       type: string
       example: '60b2f76d422221c0b0f394a1'
 responses:
-  '200':
-    description: Water record deleted successfully
-    content:
-      application/json:
-        schema:
-          type: object
-          properties:
-            status:
-              type: integer
-              description: HTTP status code indicating that the record was successfully deleted
-              example: 200
-            data:
-              type: object
-              properties:
-                id:
-                  type: string
-                  description: The id of the deleted water consumption record
-                  example: '60b2f76d422221c0b0f394a1'
+  '204':
+    description: Water consumption record deleted successfully. No content returned.
   '400':
     $ref: ../../../components/responses/400.yaml
   '404':

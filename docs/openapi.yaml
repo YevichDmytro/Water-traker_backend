@@ -15,7 +15,6 @@ tags:
     description: Documenting consumed water
 servers:
   - url: https://browser-battalion-3-0-backend-kyxl.onrender.com
-  - url: http://localhost:3000
 paths:
   /auth/register:
     post:
@@ -32,9 +31,13 @@ paths:
   /user/update:
     patch:
       $ref: '../swagger/paths/user/patch.yaml'
+  /user/avatar:
+    patch:
+      $ref: '../swagger/paths/user/avatar/patch.yaml'
+  /user/waterRate:
+    get:
+      $ref: '../swagger/paths/user/waterRate/get.yaml'
   /water:
-    # get:
-    #   $ref: ../swagger/paths/water/get.yaml
     post:
       $ref: '../swagger/paths/water/post.yaml'
   /water/{id}:
@@ -42,11 +45,9 @@ paths:
       $ref: '../swagger/paths/water/{id}/patch.yaml'
     delete:
       $ref: '../swagger/paths/water/{id}/delete.yaml'
-  # /water/day:
-  #   get:
-  /water/day/{date}:
+  /water/today:
     get:
-      $ref: '../swagger/paths/water/day/get.yaml'
+      $ref: '../swagger/paths/water/today/get.yaml'
   /water/month/{date}:
     get:
       $ref: '../swagger/paths/water/month/get.yaml'

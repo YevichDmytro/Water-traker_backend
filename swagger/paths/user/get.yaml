@@ -24,10 +24,12 @@ responses:
             message:
               type: string
               description: A message informing that the user with the requested id was successfully found in the system
-              example: 'User with id: 670b2f76d422221c0b0f394b successfully found!'
+              example: 'Successfully found current user!'
             data:
               type: object
               $ref: '../../components/schemas/user.yaml'
+  '401':
+    $ref: '../../components/responses/401.yaml'
   '404':
     $ref: '../../components/responses/404.yaml'
   '500':
