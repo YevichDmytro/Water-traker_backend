@@ -1,6 +1,7 @@
 import UsersCollection from '../db/models/Users.js';
 import WaterTrackerCollection from '../db/models/WaterTracker.js';
 import formatDateTime from '../utils/formatDate.js';
+import { formatDayMonth } from '../utils/formatDateTime.js';
 
 export const addWaterDataService = async (payload) => {
   const water = await WaterTrackerCollection.create(payload);
@@ -69,6 +70,7 @@ export const getWaterByMonthService = async (userId, month, year) => {
   }
 
   const dailyNorma = user.waterRate;
+  const dailyNormaInLiters = user.waterRate / 1000;
 
   const monthString = String(month).padStart(2, '0');
   const startOfMonth = `01-${monthString}-${year}`;
@@ -116,8 +118,8 @@ export const getWaterByMonthService = async (userId, month, year) => {
       const goalPercentage = (totalWater / dailyNorma) * 100;
 
       return {
-        date,
-        dailyNorma: `${dailyNorma} L`,
+        date: formatDayMonth(date),
+        dailyNorma: `${dailyNormaInLiters.toFixed(2)} L`,
         goalPercentage: Math.min(goalPercentage, 100),
         consumptionCount: count,
         value: totalWater,
