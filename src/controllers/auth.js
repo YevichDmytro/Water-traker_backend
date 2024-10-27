@@ -6,18 +6,7 @@ import {
   registerUser,
 } from '../services/auth.js';
 
-export const registerUserController = async (req, res) => {
-  const user = await registerUser(req.body);
-  res.status(201).json({
-    status: 201,
-    message: 'Successfully registered a user!',
-    data: user,
-  });
-};
-
-export const loginUserController = async (req, res) => {
-  const data = await loginUser(req.body);
-
+export const setupSession = (res, data) => {
   res.cookie('refreshToken', data.session.refreshToken, {
     httpOnly: true,
     expires: new Date(Date.now() + ONE_DAY),
@@ -26,6 +15,27 @@ export const loginUserController = async (req, res) => {
     httpOnly: true,
     expires: new Date(Date.now() + ONE_DAY),
   });
+};
+
+export const registerUserController = async (req, res) => {
+  const data = await registerUser(req.body);
+
+  setupSession(res, data);
+
+  res.status(201).json({
+    status: 201,
+    message: 'Successfully registered a user!',
+    data: {
+      accessToken: data.session.accessToken,
+      user: data.user,
+    },
+  });
+};
+
+export const loginUserController = async (req, res) => {
+  const data = await loginUser(req.body);
+
+  setupSession(res, data);
 
   res.json({
     status: 200,
