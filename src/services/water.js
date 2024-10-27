@@ -58,7 +58,7 @@ export const getWaterTodayService = async (userId) => {
 
   return {
     records: waterRecords,
-    percentageOfGoal: Math.min(percentageOfGoal, 100),
+    percentageOfGoal: Math.min(Math.round(percentageOfGoal), 100),
   };
 };
 
@@ -120,7 +120,7 @@ export const getWaterByMonthService = async (userId, month, year) => {
       return {
         date: formatDayMonth(date),
         dailyNorma: `${dailyNormaInLiters.toFixed(2)} L`,
-        goalPercentage: Math.min(goalPercentage, 100),
+        goalPercentage: Math.min(Math.round(goalPercentage), 100),
         consumptionCount: count,
         value: totalWater,
       };

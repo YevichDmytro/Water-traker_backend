@@ -3,7 +3,7 @@ import { randomBytes } from 'crypto';
 import bcrypt from 'bcrypt';
 import createHttpError from 'http-errors';
 
-import { FIFTEEN_MINUTES, ONE_DAY } from '../constants/index.js';
+import { ONE_DAY, THIRTY_MINUTES } from '../constants/index.js';
 import SessionsCollection from '../db/models/Sessions.js';
 import UsersCollection from '../db/models/Users.js';
 
@@ -50,7 +50,7 @@ export const loginUser = async (payload) => {
     userId: user._id,
     accessToken,
     refreshToken,
-    accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
+    accessTokenValidUntil: new Date(Date.now() + THIRTY_MINUTES),
     refreshTokenValidUntil: new Date(Date.now() + ONE_DAY),
   });
 
@@ -77,7 +77,7 @@ const createSession = () => {
   return {
     accessToken,
     refreshToken,
-    accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
+    accessTokenValidUntil: new Date(Date.now() + THIRTY_MINUTES),
     refreshTokenValidUntil: new Date(Date.now() + ONE_DAY),
   };
 };

@@ -6,6 +6,7 @@ import {
   getWaterRateService,
   updateUserService,
   updateAvatarService,
+  updateWaterRateService,
 } from '../services/user.js';
 import { env } from '../utils/env.js';
 import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
@@ -94,5 +95,20 @@ export const updateAvatarController = async (req, res, next) => {
     status: 200,
     message: 'Successfully patched a User!',
     data: update.user.photo,
+  });
+};
+
+export const updateWaterRateController = async (req, res) => {
+  const userId = req.user._id;
+  const user = await updateWaterRateService(userId, { ...req.body });
+
+  if (!user) {
+    throw createHttpError(404, 'User not found');
+  }
+
+  res.status(200).json({
+    status: 200,
+    message: 'Successfully updated water rate',
+    data: { waterRate: user.value.waterRate },
   });
 };
