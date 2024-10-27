@@ -34,7 +34,7 @@ export const updateAvatarSchema = Joi.object({
 });
 
 export const waterRateSchema = Joi.object({
-  waterRate: Joi.number().min(0).max(15000).messages({
+  waterRate: Joi.number().min(50).max(15000).messages({
     'number.base': 'Water rate must be a number.',
     'number.min': 'Water rate cannot be less than {#limit}.',
     'number.max': 'Water rate cannot exceed {#limit}.',

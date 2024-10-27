@@ -32,7 +32,7 @@ requestBody:
             example: female
             default: female
           waterRate:
-            description: "User's water rate"
+            description: "User's water rate in milliliters"
             type: number
             example: 50
 responses:
