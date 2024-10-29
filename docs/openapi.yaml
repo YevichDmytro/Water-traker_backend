@@ -8,13 +8,13 @@ info:
   description: This is a documentation of a water tracker app
 tags:
   - name: Auth
-    description: Authentication and authorisation operations
+    description: Authentication and authorization operations
   - name: User
     description: Operations with user data
   - name: Water
     description: Documenting consumed water
 servers:
-  - url: https://browser-battalion-3-0-backend-kyxl.onrender.com
+  - url: https://browser-battalion-3-0-backend.onrender.com
 paths:
   /auth/register:
     post:
