@@ -21,12 +21,17 @@ export const registerUser = async (payload) => {
     password: encryptedPassword,
   });
 
+  const login = await loginUser(payload);
+
   return {
-    name: newUser.name,
-    email: newUser.email,
-    gender: newUser.gender,
-    waterRate: newUser.waterRate,
-    photo: newUser.photo,
+    user: {
+      name: newUser.name,
+      email: newUser.email,
+      gender: newUser.gender,
+      waterRate: newUser.waterRate,
+      photo: newUser.photo,
+    },
+    session: login.session,
   };
 };
 
@@ -35,8 +40,8 @@ export const loginUser = async (payload) => {
   if (!user) {
     throw createHttpError(404, 'User not found');
   }
-  const isEqual = await bcrypt.compare(payload.password, user.password);
 
+  const isEqual = await bcrypt.compare(payload.password, user.password);
   if (!isEqual) {
     throw createHttpError(401, 'Unauthorized');
   }

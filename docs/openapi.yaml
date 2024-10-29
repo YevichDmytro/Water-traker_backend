@@ -35,8 +35,8 @@ paths:
     patch:
       $ref: '../swagger/paths/user/avatar/patch.yaml'
   /user/waterRate:
-    get:
-      $ref: '../swagger/paths/user/waterRate/get.yaml'
+    patch:
+      $ref: '../swagger/paths/user/waterRate/patch.yaml'
   /water:
     post:
       $ref: '../swagger/paths/water/post.yaml'
