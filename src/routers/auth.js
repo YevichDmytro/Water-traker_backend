@@ -4,10 +4,12 @@ import {
   registerUserController,
   loginUserController,
   logoutUserController,
+  getOAuthUrl,
+  loginWithGoogle,
 } from '../controllers/auth.js';
 import validationBody from '../middlewares/validationBody.js';
 import ctrlWrapper from '../utils/ctrlWrapper.js';
-import { authUserSchema } from '../validations/auth.js';
+import { authUserSchema, loginWithGoogleSchema } from '../validations/auth.js';
 
 const router = Router();
 
@@ -24,5 +26,13 @@ router.post(
 );
 
 router.post('/logout', ctrlWrapper(logoutUserController));
+
+router.get('/get-oauth-url', ctrlWrapper(getOAuthUrl));
+
+router.post(
+  '/confirm-oauth',
+  validationBody(loginWithGoogleSchema),
+  ctrlWrapper(loginWithGoogle),
+);
 
 export default router;
