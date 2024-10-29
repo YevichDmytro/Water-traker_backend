@@ -11,13 +11,13 @@
   },
   "servers": [
     {
-      "url": "https://browser-battalion-3-0-backend.onrender.com"
+      "url": "https://browser-battalion-3-0-backend-kyxl.onrender.com"
     }
   ],
   "tags": [
     {
       "name": "Auth",
-      "description": "Authentication and authorisation operations"
+      "description": "Authentication and authorization operations"
     },
     {
       "name": "User",
