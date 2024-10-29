@@ -1,0 +1,46 @@
+tags:
+  - User
+summary: Update user's daily water rate
+operationId: updateWaterRate
+description: Update and retrieve the daily water consumption rate for the user
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        $ref: ../../../components/schemas/waterRate.yaml
+        properties:
+          waterRate:
+            description: "User's daily norma in milliliters"
+            type: number
+            example: 150
+responses:
+  '200':
+    description: User's water rate successfully updated
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              description: HTTP status code indicating the water rate was successfully updated
+              example: 200
+            message:
+              type: string
+              description: Message confirmation that the water rate record was successfully updated
+              example: "User's Anya WaterRate!"
+            data:
+              type: object
+              $ref: '../../../components/schemas/waterRate.yaml'
+  '401':
+    $ref: '../../../components/responses/401.yaml'
+  '404':
+    $ref: '../../../components/responses/404.yaml'
+  '500':
+    $ref: '../../../components/responses/500.yaml'

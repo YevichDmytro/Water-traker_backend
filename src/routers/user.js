@@ -12,7 +12,11 @@ import isValidId from '../middlewares/isValidId.js';
 import { upload } from '../middlewares/upload.js';
 import validationBody from '../middlewares/validationBody.js';
 import ctrlWrapper from '../utils/ctrlWrapper.js';
-import { updateUserSchema, updateAvatarSchema } from '../validations/users.js';
+import {
+  updateUserSchema,
+  updateAvatarSchema,
+  waterRateSchema,
+} from '../validations/users.js';
 
 const router = Router();
 
@@ -22,7 +26,12 @@ router.get('/', ctrlWrapper(getAllUsersController));
 
 router.get('/userById', isValidId, ctrlWrapper(getUserController));
 
-router.patch('/waterRate', isValidId, ctrlWrapper(updateWaterRateController));
+router.patch(
+  '/waterRate',
+  isValidId,
+  validationBody(waterRateSchema),
+  ctrlWrapper(updateWaterRateController),
+);
 
 router.patch(
   '/update',

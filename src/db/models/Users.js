@@ -20,7 +20,7 @@ const userSchema = new Schema(
     },
     waterRate: {
       type: Number,
-      default: 50,
+      default: 2000,
     },
     photo: {
       type: String,
