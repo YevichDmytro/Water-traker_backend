@@ -81,7 +81,7 @@ export const refreshUserSessionController = async (req, res) => {
   });
 };
 
-export async function getOAuthUrl(req, res, next) {
+export const getOAuthUrl = async (req, res, next) => {
   const url = generateAuthUrl();
 
   res.send({
@@ -89,9 +89,9 @@ export async function getOAuthUrl(req, res, next) {
     message: 'Successfully get Google OAuth Url',
     data: { url },
   });
-}
+};
 
-export async function loginWithGoogle(req, res, next) {
+export const loginWithGoogle = async (req, res, next) => {
   const { code } = req.body;
   const session = await loginOrRegisterWithGoogle(code);
   res.cookie('refreshToken', session.refreshToken, {
@@ -110,4 +110,4 @@ export async function loginWithGoogle(req, res, next) {
       accessToken: session.accessToken,
     },
   });
-}
+};
