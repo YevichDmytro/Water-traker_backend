@@ -115,7 +115,7 @@ export const refreshUserSession = async ({ sessionId, refreshToken }) => {
   });
 };
 
-export async function loginOrRegisterWithGoogle(code) {
+export const loginOrRegisterWithGoogle = async (code) => {
   const ticket = await validateCode(code);
   const payload = ticket.getPayload();
 
@@ -124,6 +124,7 @@ export async function loginOrRegisterWithGoogle(code) {
   }
 
   const user = await UsersCollection.findOne({ email: payload.email });
+
   if (!user) {
     const password = await bcrypt.hash(randomBytes(30).toString('base64'), 10);
     const createUser = await UsersCollection.create({
@@ -150,22 +151,4 @@ export async function loginOrRegisterWithGoogle(code) {
     accessTokenValidUntil: new Date(Date.now() + THIRTY_MINUTES),
     refreshTokenValidUntil: new Date(Date.now() + ONE_DAY),
   });
-}
-
-export const loginWithGoogle = async (req, res) => {
-  const { code } = req.body;
-
-  try {
-    const session = await loginOrRegisterWithGoogle(code);
-    res.status(200).json({
-      status: 200,
-      message: 'Successfully logged in or registered',
-      data: {
-        accessToken: session.accessToken,
-        refreshToken: session.refreshToken,
-      },
-    });
-  } catch (error) {
-    res.status(error.status || 500).json({ message: error.message });
-  }
 };
