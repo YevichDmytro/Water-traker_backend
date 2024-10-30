@@ -1,7 +1,0 @@
-{"web":
-{"project_id":"watertracker-440018",
-"auth_uri":"https://accounts.google.com/o/oauth2/auth",
-"token_uri":"https://oauth2.googleapis.com/token",
-"auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs",
-"redirect_uris":["https://browser-battalion-3-0-dev-git-staging-yevichdmytros-projects.vercel.app"],
-"javascript_origins":["https://browser-battalion-3-0-backend-kyxl.onrender.com"]}}
