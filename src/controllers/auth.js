@@ -1,12 +1,10 @@
 import { ONE_DAY } from '../constants/index.js';
 import {
-  loginOrRegisterWithGoogle,
   loginUser,
   logoutUser,
   refreshUserSession,
   registerUser,
 } from '../services/auth.js';
-import { generateAuthUrl } from '../utils/googleOAuth2.js';
 
 const setupSession = (res, session) => {
   res.cookie('refreshToken', session.refreshToken, {
@@ -80,34 +78,3 @@ export const refreshUserSessionController = async (req, res) => {
     },
   });
 };
-
-export async function getOAuthUrl(req, res, next) {
-  const url = generateAuthUrl();
-
-  res.send({
-    status: 200,
-    message: 'Successfully get Google OAuth Url',
-    data: { url },
-  });
-}
-
-export async function loginWithGoogle(req, res, next) {
-  const { code } = req.body;
-  const session = await loginOrRegisterWithGoogle(code);
-  res.cookie('refreshToken', session.refreshToken, {
-    httpOnly: true,
-    expires: new Date(Date.now() + ONE_DAY),
-  });
-  res.cookie('sessionId', session._id, {
-    httpOnly: true,
-    expires: new Date(Date.now() + ONE_DAY),
-  });
-
-  res.status(200).send({
-    status: 200,
-    message: 'Successfully logged in with Google!',
-    data: {
-      accessToken: session.accessToken,
-    },
-  });
-}
