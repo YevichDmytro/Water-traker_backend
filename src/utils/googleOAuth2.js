@@ -16,16 +16,16 @@ const googleOAuthClient = new OAuth2Client({
   redirectUri: CONFIG.web.redirect_uris[0],
 });
 
-export const generateAuthUrl = () => {
+export function generateAuthUrl() {
   return googleOAuthClient.generateAuthUrl({
     scope: [
       'https://www.googleapis.com/auth/userinfo.email',
       'https://www.googleapis.com/auth/userinfo.profile',
     ],
   });
-};
+}
 
-export const validateCode = async (code) => {
+export async function validateCode(code) {
   const response = await googleOAuthClient.getToken(code);
   if (typeof response.tokens.id_token === 'undefined') {
     throw createHttpError(401, 'Unauthorized');
@@ -34,4 +34,4 @@ export const validateCode = async (code) => {
     idToken: response.tokens.id_token,
   });
   return ticket;
-};
+}
