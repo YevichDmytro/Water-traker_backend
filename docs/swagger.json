@@ -12,12 +12,15 @@
   "servers": [
     {
       "url": "https://browser-battalion-3-0-backend.onrender.com"
+    },
+    {
+      "url": "https://browser-battalion-3-0-backend-kyxl.onrender.com"
     }
   ],
   "tags": [
     {
       "name": "Auth",
-      "description": "Authentication and authorisation operations"
+      "description": "Authentication and authorization operations"
     },
     {
       "name": "User",
@@ -86,7 +89,17 @@
                       "example": "Successfully registered a user!"
                     },
                     "data": {
-                      "$ref": "#/components/schemas/user"
+                      "type": "object",
+                      "properties": {
+                        "accessToken": {
+                          "type": "string",
+                          "description": "The access token for the authenticated session",
+                          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                        },
+                        "user": {
+                          "$ref": "#/components/schemas/user"
+                        }
+                      }
                     }
                   }
                 }

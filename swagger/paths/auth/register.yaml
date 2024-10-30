@@ -39,7 +39,14 @@ responses:
               type: string
               example: Successfully registered a user!
             data:
-              $ref: ../../components/schemas/user.yaml
+              type: object
+              properties:
+                accessToken:
+                  type: string
+                  description: The access token for the authenticated session
+                  example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
+                user:
+                  $ref: ../../components/schemas/user.yaml
   '400':
     $ref: ../../components/responses/400.yaml
   '409':
