@@ -15,6 +15,7 @@ tags:
     description: Documenting consumed water
 servers:
   - url: https://browser-battalion-3-0-backend.onrender.com
+  - url: https://browser-battalion-3-0-backend-kyxl.onrender.com
 paths:
   /auth/register:
     post:
